@@ -22,6 +22,7 @@
         <version>2.1.3.RELEASE</version>
     </parent>
 
+
     <dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -95,9 +96,6 @@
 		    <version>3.8.0</version>
 	 	 </dependency>
   
-
-    
-    
     	<dependency>
 		    <groupId>com.auth0</groupId>
 		    <artifactId>java-jwt</artifactId>
@@ -112,6 +110,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -143,6 +143,20 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.25.2</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.drools</groupId>
+		    <artifactId>drools-core</artifactId>
+		    <version>7.0.0.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.kie</groupId>
+		    <artifactId>kie-spring</artifactId>
+		    <version>7.0.0.Final</version>
+		</dependency>
+
+
+
     </dependencies>
 
     <build>
