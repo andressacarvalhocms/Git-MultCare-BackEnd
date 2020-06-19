@@ -50,7 +50,7 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         J48 k3 = new J48();
         k3.setOptions(new String[] { "-C", "0.25", "-M", "2", "-doNotMakeSplitPointActualValue" });
         k3.buildClassifier(instances);
-
+        System.out.println(k3);
         //        // 3.1 criação de uma nova instância
         Instance novo = new DenseInstance(10);
         novo.setDataset(instances);
@@ -68,13 +68,73 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
 
         Attribute a = novo.attribute(8);
         String predClass = a.value((int) pred);
-
+ 
         analise.setClassificacao(predClass);
         analise.setUsuario(usuario);
         analise.setDataCadastro(new Date());
         return analiseRepository.save(analise);
     }
 
+
+/*
+    @Override
+    public Analise realizarMonitoramento() throws Exception {
+
+        Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
+        Analise analise = obterExamesUsuarioParaAnalise(usuario );
+
+        Instances instances = obterBaseAprendizagem();
+        // 1.1 - espeficicação do atributo classe
+        instances.setClassIndex(8);
+        // (2) Construção do modelo classificador (treinamento)
+        //------------------------------------------------------
+        Instance novo = new DenseInstance(10);
+        novo.setDataset(instances);
+        novo.setValue(0, String.valueOf(analise.getHas())); // hipertensao
+        novo.setValue(1, String.valueOf(analise.getDm())); // diabets
+        novo.setValue(2, analise.getCreatinina()); // creatina
+        novo.setValue(3, analise.getUreia()); // ureia
+        novo.setValue(4, analise.getMicroalbuminaria()); // microalbuminuria
+        novo.setValue(5, analise.getIdade()); // idade
+        novo.setValue(6, String.valueOf(analise.getSexo())); // sexo
+        novo.setValue(7, analise.getTfg()); // tfg
+        novo.setValue(8, analise.getGlicemia_jejum()); // getGlicemia_jejum
+//     // 3.2 classificação de uma nova instância
+        
+ 
+        
+       if (analise.getGlicemia_jejum() < 110) {    	   
+    	  
+    	   String pred = "hiperglicemia";	 
+
+         //  Attribute a = novo.attribute(8);
+           String predClass = pred;  
+    	   System.out.println("hiperglicemia");
+     
+		analise.setClassificacao(predClass);
+        analise.setUsuario(usuario);
+        analise.setDataCadastro(new Date());
+        return analiseRepository.save(analise);
+       } else {
+
+    	   String pred = "hipoglicemia";	 
+
+         //  Attribute a = novo.attribute(8);
+           String predClass = pred;  
+    	   System.out.println("hipoglicemia");
+     
+		analise.setClassificacao(predClass);
+        analise.setUsuario(usuario);
+        analise.setDataCadastro(new Date());
+        return analiseRepository.save(analise);
+       }
+//	return analise;
+    }
+
+
+  */  
+      
+    
     @Override
     public List<Analise> obterAnalisesDoUsuarioAutenticado() {
         Integer idUsuario = obterIdUsuarioAutenticado();
@@ -93,6 +153,10 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.setIdade(usuario.getIdade());
         analise.setSexo(usuario.getSexo());
         analise.setTfg(obterResultadoExame(usuario.getId(), TFG));
+        analise.setGlicemia_jejum(obterResultadoExame(usuario.getId(), GLICEMIA_JEJUM));
+        analise.setGlicemia_pre_pran(obterResultadoExame(usuario.getId(), GLIGEMICA_PRE_PRAN));
+        analise.setGlicemia_pos_pran(obterResultadoExame(usuario.getId(), GLIGEMICA_POS_PRAN));
+        analise.setPressao_arterial(obterResultadoExame(usuario.getId(), PRESSAO_ARTERIAL));
 
         return analise;
     }

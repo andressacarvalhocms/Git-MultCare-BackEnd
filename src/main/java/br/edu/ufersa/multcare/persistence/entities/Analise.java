@@ -6,6 +6,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLICEMIA_JEJUM;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLIGEMICA_POS_PRAN;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLIGEMICA_PRE_PRAN;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.PRESSAO_ARTERIAL;
+
 import java.util.Date;
 
 
@@ -26,6 +32,10 @@ public class Analise {
 	private Double tfg;
 	private String classificacao;
 	private Date dataCadastro;
+	private Double glicemia_jejum;
+	private Double glicemia_pre_pran; 
+	private Double glicemia_pos_pran; 
+	private Double pressao_arterial;
 
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)

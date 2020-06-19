@@ -10,5 +10,7 @@ public interface AnaliseDeRiscoDeDRCService {
 
     Analise realizarClassificacaoAnalise() throws Exception;
 
+    Analise realizarMonitoramento() throws Exception;
+
     List<Analise> obterAnalisesDoUsuarioAutenticado();
 }

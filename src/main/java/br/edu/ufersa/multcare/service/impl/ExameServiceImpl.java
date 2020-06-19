@@ -1,23 +1,37 @@
 package br.edu.ufersa.multcare.service.impl;
 
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.CREATININA;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLICEMIA_JEJUM;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLIGEMICA_POS_PRAN;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.GLIGEMICA_PRE_PRAN;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.MICROALBUMINURIA;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.PRESSAO_ARTERIAL;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.TFG;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.UREIA;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.getCodigoPorDescricao;
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
+import static br.edu.ufersa.multcare.util.StringUtil.removerAcentos;
+import static br.edu.ufersa.multcare.util.StringUtil.substituirEspacosPorUnderScore;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.ExameRepository;
 import br.edu.ufersa.multcare.service.ExameService;
 import br.edu.ufersa.multcare.service.UsuarioService;
-import org.springframework.stereotype.Component;
-
-import java.util.*;
-
-import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.*;
-import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
-import static br.edu.ufersa.multcare.util.StringUtil.removerAcentos;
-import static br.edu.ufersa.multcare.util.StringUtil.substituirEspacosPorUnderScore;
 
 @Component
 public class ExameServiceImpl implements ExameService {
 
-    private final ExameRepository exameRepository;
+
+	private final ExameRepository exameRepository;
 
     private final UsuarioService usuarioService;
 
@@ -57,7 +71,7 @@ public class ExameServiceImpl implements ExameService {
 
         Map<String, Boolean> map = new HashMap<>();
 
-        Arrays.asList(CREATININA, UREIA, MICROALBUMINURIA, TFG).forEach(codigoExame -> {
+        Arrays.asList(CREATININA, UREIA, MICROALBUMINURIA, TFG, GLICEMIA_JEJUM, GLIGEMICA_PRE_PRAN, GLIGEMICA_POS_PRAN, PRESSAO_ARTERIAL).forEach(codigoExame -> {
             Exame exame = exameRepository.findDistinctTopByCodigoExameEqualsAndIdUsuarioEquals(codigoExame.getCodigo(), idUsuario);
             map.put(tratarDescricao(codigoExame.getDescricao()), exame != null);
         });
