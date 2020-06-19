@@ -25,13 +25,13 @@ public class AnaliseRiscoResource {
 		return ResponseEntity.ok(analise);
 	}
 
+
 	@GetMapping("/realizarMonitoramento")
 	public ResponseEntity<Analise> realizarMonitoramento() throws Exception {
 
 		Analise analise = analiseDeRiscoDeDRCService.realizarMonitoramento();
 		return ResponseEntity.ok(analise);
 	}
-	
 	
 	@GetMapping("/obter-analises")
 	public ResponseEntity<?> obterAnalisesUsuarioAutenticado() {

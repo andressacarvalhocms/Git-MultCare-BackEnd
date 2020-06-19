@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface AnaliseDeRiscoDeDRCService {
 
-    Analise realizarClassificacaoAnalise() throws Exception;
+    Analise realizarClassificacaoAnalise() throws Exception;    
 
     Analise realizarMonitoramento() throws Exception;
 

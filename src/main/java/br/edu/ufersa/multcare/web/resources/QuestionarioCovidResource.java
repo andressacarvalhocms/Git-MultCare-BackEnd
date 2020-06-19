@@ -4,6 +4,7 @@ import static java.lang.Boolean.TRUE;
 
 import java.util.List;
 
+import br.edu.ufersa.multcare.shared.dto.QuestionarioCovidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +33,7 @@ public class QuestionarioCovidResource {
 	}
 
 	@PostMapping("/questionarioCovid")
-	public ResponseEntity<QuestionarioCovid> salvaQuestionarioCovid(@RequestBody QuestionarioCovid questionarioCovid) {
+	public ResponseEntity<QuestionarioCovid> salvaQuestionarioCovid(@RequestBody QuestionarioCovidDTO questionarioCovid) {
 		QuestionarioCovid questionarioCovidSalva = questionarioCovidService.cadastrarQuestionarioCovid(questionarioCovid);
 		return ResponseEntity.ok(questionarioCovidSalva);
 	}

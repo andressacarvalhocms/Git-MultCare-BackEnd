@@ -74,68 +74,106 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.setDataCadastro(new Date());
         return analiseRepository.save(analise);
     }
-
-
-/*
+    
+    
     @Override
     public Analise realizarMonitoramento() throws Exception {
 
-        Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
-        Analise analise = obterExamesUsuarioParaAnalise(usuario );
-
-        Instances instances = obterBaseAprendizagem();
-        // 1.1 - espeficicação do atributo classe
-        instances.setClassIndex(8);
-        // (2) Construção do modelo classificador (treinamento)
-        //------------------------------------------------------
-        Instance novo = new DenseInstance(10);
-        novo.setDataset(instances);
-        novo.setValue(0, String.valueOf(analise.getHas())); // hipertensao
-        novo.setValue(1, String.valueOf(analise.getDm())); // diabets
-        novo.setValue(2, analise.getCreatinina()); // creatina
-        novo.setValue(3, analise.getUreia()); // ureia
-        novo.setValue(4, analise.getMicroalbuminaria()); // microalbuminuria
-        novo.setValue(5, analise.getIdade()); // idade
-        novo.setValue(6, String.valueOf(analise.getSexo())); // sexo
-        novo.setValue(7, analise.getTfg()); // tfg
-        novo.setValue(8, analise.getGlicemia_jejum()); // getGlicemia_jejum
-//     // 3.2 classificação de uma nova instância
-        
- 
-        
-       if (analise.getGlicemia_jejum() < 110) {    	   
-    	  
-    	   String pred = "hiperglicemia";	 
-
-         //  Attribute a = novo.attribute(8);
-           String predClass = pred;  
-    	   System.out.println("hiperglicemia");
-     
+    	   Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
+           Analise analise = obterExamesUsuarioParaAnalise(usuario );  
+           
+    if (analise.getGlicemia_jejum() < 110) {    	   
+  	   	 String pred = "Glicose normal"; //salvar no banco assim	 
+         String predClass = pred;  
+         System.out.println("Sua taxa de glicose está atingindo os objetivos para um melhor controle."); //imprimir essa mensagem
 		analise.setClassificacao(predClass);
-        analise.setUsuario(usuario);
-        analise.setDataCadastro(new Date());
-        return analiseRepository.save(analise);
-       } else {
-
-    	   String pred = "hipoglicemia";	 
-
-         //  Attribute a = novo.attribute(8);
-           String predClass = pred;  
-    	   System.out.println("hipoglicemia");
-     
+    } else if (analise.getGlicemia_jejum() > 110)  {
+ 	   String pred = "Glicose acima do normal."; //salvar no banco assim	 
+ 	   String predClass = pred;  
+ 	   System.out.println("Sua taxa de glicose está acima do normal."); //imprimir essa mensagem
 		analise.setClassificacao(predClass);
-        analise.setUsuario(usuario);
-        analise.setDataCadastro(new Date());
-        return analiseRepository.save(analise);
-       }
-//	return analise;
-    }
+    } else if (analise.getGlicemia_pre_pran() < 110) {    	   
+ 	   	 String pred = "Glicose normal"; //salvar no banco assim	 
+        String predClass = pred;  
+        System.out.println("Sua taxa de glicose está atingindo os objetivos para um melhor controle."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+    } else if (analise.getGlicemia_pre_pran() > 110) {
+	   String pred = "Glicose acima do normal."; //salvar no banco assim	 
+	   String predClass = pred;  
+	   System.out.println("Sua taxa de glicose está acima do normal."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+    } else if (analise.getGlicemia_pos_pran() < 140) {    	   
+ 	   	 String pred = "Glicose normal"; //salvar no banco assim	 
+        String predClass = pred;  
+        System.out.println("Sua taxa de glicose está atingindo os objetivos para um melhor controle."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+    } else if (analise.getGlicemia_pos_pran() >  140) {
+	   String pred = "Glicose acima do normal."; //salvar no banco assim	 
+	   String predClass = pred;  
+	   System.out.println("Sua taxa de glicose está acima do normal."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+    } /* else if (analise.getPressao_arterialSistolica() < 120 and analise.getPressao_arterialDiastolica() < 80 ) {    	   
+ 	   	String pred = "PA Ótima"; //salvar no banco assim	 
+        String predClass = pred;  
+        System.out.println("Sua taxa de pressão arterial está ótima."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+    } else if (analise.getPressao_arterialSistolica() < 130 and analise.getPressao_arterialDiastolica() < 85 ) {    	   
+	   	String pred = "PA normal"; //salvar no banco assim	 
+        String predClass = pred;  
+        System.out.println("Sua taxa de pressão arterial está normal."); //imprimir essa mensagem
+		analise.setClassificacao(predClass);
+	 } else if ((analise.getPressao_arterialSistolica() >= 130 and analise.getPressao_arterialSistolica() < 139) and 
+			 (analise.getPressao_arterialDiastolica() >= 85 and analise.getPressao_arterialDiastolica() < 80 )) {    	   
+	   	 String pred = "PA limitrofe"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está limitrofe."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+	 } else if ((analise.getPressao_arterialSistolica() >= 140 and analise.getPressao_arterialSistolica() < 159) and 
+			 (analise.getPressao_arterialDiastolica() >= 90 and analise.getPressao_arterialDiastolica() < 99 )) {    	   
+	   	 String pred = "PA Hipertensão estágio 1"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão estágio 1."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+	 } else if ((analise.getPressao_arterialSistolica() >= 169 and analise.getPressao_arterialSistolica() < 179) and 
+			 (analise.getPressao_arterialDiastolica() >= 100 and analise.getPressao_arterialDiastolica() < 109 )) {    	   
+	   	 String pred = "PA Hipertensão estágio 2"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão estágio 2."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+	 } else if ((analise.getPressao_arterialSistolica() >= 169 and analise.getPressao_arterialSistolica() < 179) and 
+			 (analise.getPressao_arterialDiastolica() >= 100 and analise.getPressao_arterialDiastolica() < 109 )) {    	   
+	   	 String pred = "PA Hipertensão estágio 2"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão estágio 2."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+	 } else if (analise.getPressao_arterialSistolica() >= 180 and analise.getPressao_arterialDiastolica() >= 110 ) {    	   
+	   	 String pred = "PA Hipertensão estágio 2"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão estágio 2."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+	 } else if (analise.getPressao_arterialSistolica() >= 140 and analise.getPressao_arterialDiastolica() < 90 ) {    	   
+	   	 String pred = "PA Hipertensão estágio 3"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão estágio 3."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+    }else if (analise.getPressao_arterialSistolica() >= 140 AND analise.getPressao_arterialDiastolica() < 90 ) {    	   
+	   	 String pred = "PA Hipertensão estágio 2"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Sua taxa de pressão arterial está Hipertensão sistólica isolada."); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+    }else {    	   
+	   	 String pred = "Inconclusivo"; //salvar no banco assim	 
+	     String predClass = pred;  
+	     System.out.println("Inconclusivo"); //imprimir essa mensagem
+		 analise.setClassificacao(predClass);
+   } */
+	analise.setUsuario(usuario);
+	analise.setDataCadastro(new Date());
+	return analiseRepository.save(analise);
+  }
+     
 
-
-  */  
-      
-    
-    @Override
+	@Override
     public List<Analise> obterAnalisesDoUsuarioAutenticado() {
         Integer idUsuario = obterIdUsuarioAutenticado();
         return analiseRepository.obterAnalisesPorUsuario(idUsuario);
@@ -153,10 +191,6 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.setIdade(usuario.getIdade());
         analise.setSexo(usuario.getSexo());
         analise.setTfg(obterResultadoExame(usuario.getId(), TFG));
-        analise.setGlicemia_jejum(obterResultadoExame(usuario.getId(), GLICEMIA_JEJUM));
-        analise.setGlicemia_pre_pran(obterResultadoExame(usuario.getId(), GLIGEMICA_PRE_PRAN));
-        analise.setGlicemia_pos_pran(obterResultadoExame(usuario.getId(), GLIGEMICA_POS_PRAN));
-        analise.setPressao_arterial(obterResultadoExame(usuario.getId(), PRESSAO_ARTERIAL));
 
         return analise;
     }
