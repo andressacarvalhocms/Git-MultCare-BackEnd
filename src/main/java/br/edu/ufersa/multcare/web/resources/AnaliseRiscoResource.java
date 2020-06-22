@@ -2,7 +2,6 @@ package br.edu.ufersa.multcare.web.resources;
 
 import br.edu.ufersa.multcare.persistence.entities.Analise;
 import br.edu.ufersa.multcare.service.AnaliseDeRiscoDeDRCService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping(value="/api/analise")
 public class AnaliseRiscoResource {
 
-	@Autowired
-	private AnaliseDeRiscoDeDRCService analiseDeRiscoDeDRCService;
+	private final AnaliseDeRiscoDeDRCService analiseDeRiscoDeDRCService;
+
+	public AnaliseRiscoResource(AnaliseDeRiscoDeDRCService analiseDeRiscoDeDRCService) {
+		this.analiseDeRiscoDeDRCService = analiseDeRiscoDeDRCService;
+	}
 
 	@GetMapping("/realizar")
 	public ResponseEntity<Analise> realizarAnaliseRisco() throws Exception {
@@ -25,14 +27,6 @@ public class AnaliseRiscoResource {
 		return ResponseEntity.ok(analise);
 	}
 
-
-	@GetMapping("/realizarMonitoramento")
-	public ResponseEntity<Analise> realizarMonitoramento() throws Exception {
-
-		Analise analise = analiseDeRiscoDeDRCService.realizarMonitoramento();
-		return ResponseEntity.ok(analise);
-	}
-	
 	@GetMapping("/obter-analises")
 	public ResponseEntity<?> obterAnalisesUsuarioAutenticado() {
 		List<Analise> analises = analiseDeRiscoDeDRCService.obterAnalisesDoUsuarioAutenticado();
