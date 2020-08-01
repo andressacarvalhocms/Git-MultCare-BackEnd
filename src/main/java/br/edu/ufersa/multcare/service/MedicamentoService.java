@@ -11,6 +11,8 @@ public interface MedicamentoService {
     List<Medicamento> listarMedicamentoUsuarioLogado();
 
     List<Medicamento> listarMedicamentos();
+    
+    List<Medicamento> obterTodosMedicamentosPorPeriodo();
 
     Medicamento cadastrarMedicamento(Medicamento medicamento);
 

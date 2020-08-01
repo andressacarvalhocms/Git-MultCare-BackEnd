@@ -1,4 +1,3 @@
-
 insert into sintoma (id, descricao) values (1, "Tosse seca");
 insert into sintoma (id, descricao) values (2, "Dor muscular");
 insert into sintoma (id, descricao) values (3, "Dor de cabeça");
@@ -46,4 +45,4 @@ insert into sintoma_adicional (id, descricao) values (9, "Mal estar intenso ou p
 insert into sintoma_adicional (id, descricao) values (10, "Sensação de desmaio");
 insert into sintoma_adicional (id, descricao) values (11, "Tontura constante e severa");
 insert into sintoma_adicional (id, descricao) values (12, "Pressão baixa");
-insert into sintoma_adicional (id, descricao) values (13, "Nenhum desses sintomas");
+insert into sintoma_adicional (id, descricao) values (13, "Nenhum desses sintomas"); 

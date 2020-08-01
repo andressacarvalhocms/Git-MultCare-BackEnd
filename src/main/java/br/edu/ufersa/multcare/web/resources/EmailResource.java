@@ -1,22 +1,28 @@
 package br.edu.ufersa.multcare.web.resources;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-@RestController
+@Component
 public class EmailResource {
+/*
 
-  /*  @Autowired private JavaMailSender mailSender;
+    @Autowired private JavaMailSender mailSender;
 
-    @RequestMapping(path = "/email-send", method = RequestMethod.GET)
-    public String sendMail() {
+	@Scheduled(fixedDelay = 250000)
+	   public String executar() {
+		
+	       System.out.println("Executou o Scheduled com delay");
+//    public String sendMail() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Hello from Spring Boot Application");
-        message.setTo("andressamelocms@gmail.com");
+        message.setText("Hora do rémedio x:");
+        message.setTo("acmsq@ic.ufal.br");
         message.setFrom("andressamelocms@gmail.com");
 
         try {
@@ -26,5 +32,28 @@ public class EmailResource {
             e.printStackTrace();
             return "Erro ao enviar email.";
         }
-    } */
+	   
+    }  
+    
+    *
+    *
+    *
+    *
+    *		
+	/*	if (!medicamentos.isEmpty()) {
+			for (int i = 0; i < medicamentos.size(); i++) {
+
+				Usuario user = ((Medicamento) medicamentos).getUsuario();
+				SimpleMailMessage message = new SimpleMailMessage();
+		        message.setText("Hora do rémedio x:");
+		        message.setTo(user.getLogin());
+		        message.setFrom("andressamelocms@gmail.com");
+		        mailSender.send(message);
+		        System.out.println("Email enviado!");
+			}  
+		}else {
+
+			   System.out.println("Nenhum medicamento nesse horário!");
+		} */
+    
 }

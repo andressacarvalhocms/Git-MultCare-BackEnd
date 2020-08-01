@@ -28,7 +28,7 @@ public class Medicamento  {
 	private Date dataCadastro;
 
 	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Usuario usuario;
 
 }

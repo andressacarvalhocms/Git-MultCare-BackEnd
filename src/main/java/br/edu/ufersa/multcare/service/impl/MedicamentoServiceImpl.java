@@ -52,4 +52,11 @@ public class MedicamentoServiceImpl implements MedicamentoService {
     public Medicamento atualizarMedicamento(Medicamento medicamento) {
         return medicamentoRepository.save(medicamento);
     }
+
+	@Override
+	public List<Medicamento> obterTodosMedicamentosPorPeriodo() {
+        return medicamentoRepository.obterTodosMedicamentosPorPeriodo();
+	}
+	
+	
 }

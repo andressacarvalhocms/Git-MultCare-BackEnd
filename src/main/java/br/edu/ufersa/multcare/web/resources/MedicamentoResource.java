@@ -1,14 +1,28 @@
 package br.edu.ufersa.multcare.web.resources;
 
-import br.edu.ufersa.multcare.persistence.entities.Medicamento;
-import br.edu.ufersa.multcare.service.MedicamentoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import static java.lang.Boolean.TRUE;
 
 import java.util.List;
 
-import static java.lang.Boolean.TRUE;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.edu.ufersa.multcare.persistence.entities.Medicamento;
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import br.edu.ufersa.multcare.service.MedicamentoService;
 
 
 @RestController
@@ -17,7 +31,7 @@ public class MedicamentoResource {
 	
 	@Autowired
 	private MedicamentoService medicamentoService;
-
+	
 	@GetMapping("/medicamentoUsuario")
 	public ResponseEntity<List<Medicamento>> listaMedicamentoUsuario(){
 		List<Medicamento> medicamentos = medicamentoService.listarMedicamentoUsuarioLogado();
@@ -41,4 +55,42 @@ public class MedicamentoResource {
 		Medicamento medicamentoAtualizado = medicamentoService.atualizarMedicamento(medicamento);
 		return ResponseEntity.ok(medicamentoAtualizado);
 	}
+	
+	
+
+    @Autowired private JavaMailSender mailSender;
+    @Scheduled(fixedDelay = 50000)
+	public void obterTodosMedicamentosPorPeriodo(){
+		List<Medicamento> medicamentos = medicamentoService.obterTodosMedicamentosPorPeriodo();
+		medicamentos.forEach(med->{
+			Usuario user = med.getUsuario();
+			try {
+				enviarEmail(user, med);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} ) ;
+	}
+	private void enviarEmail(Usuario user, Medicamento medicamento) throws MessagingException {
+/*		SimpleMailMessage message = new SimpleMailMessage();
+        message.setText("Hora do rémedio: "+medicamento.getNome()+"<br> Tipo: "+medicamento.getTipo()+"<br> Data inicial: "+medicamento.getDataInicial()+" Data Final: "+medicamento.getDataFinal());
+//        message.setTo(user.getLogin());
+        message.setSubject("Multcare");
+        message.setFrom("andressamelocms@gmail.com");
+        mailSender.send(message);
+  */
+		
+		 MimeMessage mail = mailSender.createMimeMessage();
+
+         MimeMessageHelper helper = new MimeMessageHelper( mail );
+         helper.setTo(user.getLogin());
+         helper.setSubject( "Multcare" );
+         helper.setText("Rémedio: "+medicamento.getNome()+"<br>Hora: "+medicamento.getHora()+"<br>Tipo: "+medicamento.getTipo()+"<br>Quantidade diária: "+medicamento.getQuantidadeDiaria(), true);
+         helper.setFrom("andressamelocms@gmail.com");
+         mailSender.send(mail);
+		
+		
+		System.out.println("Email enviado!");
+		}
 }
