@@ -20,6 +20,7 @@ public class Exame  {
 	private String resultado;
 	private Date dataCadastro;
 	private Integer codigoExame;
+	private String status;
 
 	@Column(name = "usuario_id", insertable = false, updatable = false)
 	private int idUsuario;

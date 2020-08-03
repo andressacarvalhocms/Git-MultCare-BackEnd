@@ -36,6 +36,7 @@ public class ExameServiceImpl implements ExameService {
         Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
         exame.setUsuario(usuario);
         exame.setDataCadastro(new Date());
+        exame.setStatus("A");
         exame.setCodigoExame(getCodigoPorDescricao(exame.getNome()).getCodigo());
 
         return exameRepository.save(exame);
@@ -54,11 +55,11 @@ public class ExameServiceImpl implements ExameService {
     @Override
     public Map<String, Boolean> examesCadastradosUsuarioLogado() {
         Integer idUsuario = obterIdUsuarioAutenticado();
-
+        String Status = "A";
         Map<String, Boolean> map = new HashMap<>();
 
         Arrays.asList(CREATININA, UREIA, MICROALBUMINURIA, TFG, GLICEMIA_JEJUM, GLIGEMICA_PRE_PRAN, GLIGEMICA_POS_PRAN, PRESSAO_ARTERIAL).forEach(codigoExame -> {
-            Exame exame = exameRepository.findDistinctTopByCodigoExameEqualsAndIdUsuarioEquals(codigoExame.getCodigo(), idUsuario);
+            Exame exame = exameRepository.findDistinctTopByCodigoExameEqualsAndIdUsuarioEqualsAndStatus(codigoExame.getCodigo(), idUsuario, Status);
             map.put(tratarDescricao(codigoExame.getDescricao()), exame != null);
         });
         return map;
