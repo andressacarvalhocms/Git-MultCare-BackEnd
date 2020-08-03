@@ -17,7 +17,7 @@ public interface MedicamentoRepository extends JpaRepository<Medicamento, Long>{
 
 	@Query(
 			nativeQuery = true,
-			value = "select * from Medicamento WHERE hora = TIME_FORMAT(CURTIME(), '%H:%i') "
+			value = "select * from medicamento WHERE hora = TIME_FORMAT(CURTIME(), '%H:%i') "
 					+ "and CURRENT_DATE BETWEEN data_inicial AND data_final "
 	)
 	List<Medicamento> obterTodosMedicamentosPorPeriodo();

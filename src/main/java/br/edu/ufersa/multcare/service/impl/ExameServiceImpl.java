@@ -5,6 +5,7 @@ import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.ExameRepository;
 import br.edu.ufersa.multcare.service.ExameService;
 import br.edu.ufersa.multcare.service.UsuarioService;
+import br.edu.ufersa.multcare.shared.dto.ExamesXmlDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -40,6 +41,12 @@ public class ExameServiceImpl implements ExameService {
         exame.setCodigoExame(getCodigoPorDescricao(exame.getNome()).getCodigo());
 
         return exameRepository.save(exame);
+    }
+
+    @Override
+    public List<Exame> cadastrarExamePorXml(ExamesXmlDTO examesXmlDTO) {
+        //TODO Implementar
+        return null;
     }
 
     @Override

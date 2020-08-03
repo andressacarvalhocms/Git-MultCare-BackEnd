@@ -2,9 +2,11 @@ package br.edu.ufersa.multcare.web.resources;
 
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 import br.edu.ufersa.multcare.service.ExameService;
+import br.edu.ufersa.multcare.shared.dto.ExamesXmlDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,12 @@ public class ExameResource {
 	public ResponseEntity<Exame> salvaExame(@RequestBody Exame exame){
 		Exame exameSalvo = exameService.cadastrarExame(exame);
 		return ResponseEntity.ok(exameSalvo);
+	}
+
+	@PostMapping(name = "/exames/xml", consumes = { MediaType.APPLICATION_XML_VALUE,})
+	public ResponseEntity cadastrarExamesPorXml(@RequestBody ExamesXmlDTO examesXmlDTO) {
+		List<Exame> exames = exameService.cadastrarExamePorXml(examesXmlDTO);
+		return ResponseEntity.ok(exames);
 	}
 	
 	@DeleteMapping("/exames")
