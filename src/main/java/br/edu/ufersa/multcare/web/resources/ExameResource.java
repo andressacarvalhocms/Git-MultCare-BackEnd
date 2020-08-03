@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
 
+
 @RestController
 @RequestMapping(value="/api")
 @Api(value="API REST EXAMES")
@@ -55,4 +56,15 @@ public class ExameResource {
 		Map<String, Boolean> examesCadastrados = exameService.examesCadastradosUsuarioLogado();
 		return ResponseEntity.ok(examesCadastrados);
 	}
+	
+   @GetMapping("/customer")
+   public Exame getCustomer(){
+     return new Exame("Peter", "Smith");
+   }
+   
+   @PostMapping("/customer")
+   public String postExame(@RequestBody Exame exame){
+     System.out.println(exame);
+     return "Done";
+   }
 }
