@@ -15,12 +15,14 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.*;
 import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
 import static br.edu.ufersa.multcare.shared.baseaprendizagem.BaseAprendizagemSingleton.obterBaseAprendizagem;
+import static java.util.Arrays.asList;
 
 @Component
 public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCService {
@@ -37,6 +39,7 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
 
 
     @Override
+    @Transactional
     public Analise realizarClassificacaoAnalise() throws Exception {
 
         Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
@@ -72,7 +75,12 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.setClassificacao(predClass);
         analise.setUsuario(usuario);
         analise.setDataCadastro(new Date());
-        return analiseRepository.save(analise);
+        analise = analiseRepository.save(analise);
+
+        analise.invalidarExamesUtilizados();
+        atualizarStatusExames(analise.getExames());
+
+        return analise;
     }
 
 	@Override
@@ -85,24 +93,34 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
 
         Analise analise = new Analise();
 
+        Exame exameCreatina = obterExameMaisRecente(usuario.getId(), CREATININA);
+        Exame exameUreia = obterExameMaisRecente(usuario.getId(), UREIA);
+        Exame exameMicroalbuminuria = obterExameMaisRecente(usuario.getId(), MICROALBUMINURIA);
+        Exame exameTfg = obterExameMaisRecente(usuario.getId(), TFG);
+
         analise.setDm(usuario.getDiabetico());
         analise.setHas(usuario.getHipertenso());
-        analise.setCreatinina(obterResultadoExame(usuario.getId(), CREATININA));
-        analise.setUreia(obterResultadoExame(usuario.getId(), UREIA));
-        analise.setMicroalbuminaria(obterResultadoExame(usuario.getId(), MICROALBUMINURIA));
+        analise.setCreatinina(obterResultadoExame(exameCreatina));
+        analise.setUreia(obterResultadoExame(exameUreia));
+        analise.setMicroalbuminaria(obterResultadoExame(exameMicroalbuminuria));
         analise.setIdade(usuario.getIdade());
         analise.setSexo(usuario.getSexo());
-        analise.setTfg(obterResultadoExame(usuario.getId(), TFG));
+        analise.setTfg(obterResultadoExame(exameTfg));
+        analise.setExames(asList(exameCreatina, exameUreia, exameMicroalbuminuria, exameTfg));
 
         return analise;
     }
 
-    private Double obterResultadoExame(Integer idUser, CodigoExame codigo) {
-        String resultado = obterExameMaisRecente(idUser, codigo).getResultado();
+    private Double obterResultadoExame(Exame exame) {
+        String resultado = exame.getResultado();
         return Double.valueOf(resultado.replace(",", "."));
     }
 
     private Exame obterExameMaisRecente(Integer idUsuario, CodigoExame codigoExame){
         return exameRepository.obterExameMaisRecentePorUsuarioCodExame(codigoExame.getCodigo(), idUsuario);
+    }
+
+    private void atualizarStatusExames(List<Exame> exames) {
+        exameRepository.saveAll(exames);
     }
 }

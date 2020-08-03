@@ -6,7 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -36,9 +38,11 @@ public class Analise {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;
 
-	public void setMonitoramento(Double pred) {
-		// TODO Auto-generated method stub
-		
+	@Transient
+	private List<Exame> exames = new ArrayList<>();
+
+	public void invalidarExamesUtilizados() {
+		exames.forEach(Exame::alterarStatusParaInativo);
 	}
 
 }

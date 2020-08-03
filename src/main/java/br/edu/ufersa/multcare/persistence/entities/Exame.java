@@ -44,6 +44,10 @@ public class Exame  {
 	    this.nome = nome;
 	    this.resultado = resultado;
 	  }
+
+	  public void alterarStatusParaInativo(){
+		this.setStatus("I");
+	  }
 	  
 	  @Override
 	  public String toString() {
