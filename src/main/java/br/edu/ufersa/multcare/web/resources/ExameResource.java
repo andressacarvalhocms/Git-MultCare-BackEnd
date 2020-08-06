@@ -1,19 +1,27 @@
 package br.edu.ufersa.multcare.web.resources;
 
-import br.edu.ufersa.multcare.persistence.entities.Exame;
-import br.edu.ufersa.multcare.service.ExameService;
-import br.edu.ufersa.multcare.shared.dto.ExamesXmlDTO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import static java.lang.Boolean.TRUE;
 
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Boolean.TRUE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.edu.ufersa.multcare.persistence.entities.Exame;
+import br.edu.ufersa.multcare.service.ExameService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 
 @RestController
@@ -24,7 +32,8 @@ public class ExameResource {
 	
 	@Autowired
 	private ExameService exameService;
-	
+
+      
 	@GetMapping("/examesUsuario")
 	@ApiOperation(value="Retorna uma lista de exames do usuário logado")
 	public ResponseEntity<List<Exame>> listaExames(){
@@ -39,12 +48,40 @@ public class ExameResource {
 		return ResponseEntity.ok(exameSalvo);
 	}
 
-	@PostMapping(name = "/exames/xml", consumes = { MediaType.APPLICATION_XML_VALUE,})
+/*	@PostMapping(name = "/exames/xml", consumes = { MediaType.APPLICATION_XML_VALUE,})
 	public ResponseEntity cadastrarExamesPorXml(@RequestBody ExamesXmlDTO examesXmlDTO) {
 		List<Exame> exames = exameService.cadastrarExamePorXml(examesXmlDTO);
 		return ResponseEntity.ok(exames);
 	}
+	*/
+
+	@RequestMapping(value = "/exames/xml", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_XML_VALUE,})
+	public List<Exame> cadastrarExamesPorXml(@RequestBody List<Exame> examesXmlDTO) {
+		List<Exame> exames = (List<Exame>) exameService.cadastrarExamePorXml(examesXmlDTO);
+		return exames;
+	}
 	
+	/*
+	@RequestMapping(value = "/saveall", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Exame> saveAllExame(@RequestBody List<Exame> exameList) {
+		List<Exame> exameResponse = (List<Exame>) exameService.saveAllExame(exameList);
+		return exameResponse;
+	}
+	
+	 /* @PostMapping("/tutorials")
+	  public ResponseEntity<Exame> createExame(@RequestBody Exame exame) {
+		  
+	    try {
+	    	Exame _exame = exameRepository.save(new Exame(exame.getNome(), 
+	    			exame.getResultado()));
+	      return new ResponseEntity<>(_exame, HttpStatus.CREATED);
+	    } catch (Exception e) {
+	      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+	    }
+	  }
+	
+	*/
 	@DeleteMapping("/exames")
 	@ApiOperation(value="deleta um exame")
 	public ResponseEntity<Boolean> deletaExame(@RequestBody Exame exame){
@@ -65,14 +102,5 @@ public class ExameResource {
 		return ResponseEntity.ok(examesCadastrados);
 	}
 	
-   @GetMapping("/customer")
-   public Exame getCustomer(){
-     return new Exame("Peter", "Smith");
-   }
    
-   @PostMapping("/customer")
-   public String postExame(@RequestBody Exame exame){
-     System.out.println(exame);
-     return "Done";
-   }
 }

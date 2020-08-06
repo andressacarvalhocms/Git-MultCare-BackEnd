@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Repository
-public interface ExameRepository extends JpaRepository<Exame, Long>{
+public interface ExameRepository extends JpaRepository<Exame, Serializable>{
 
 	@Query("select ex from Exame ex where ex.usuario.id= ?1 and ex.status = 'A'")
 	List<Exame> listarExamesUsuario(Integer id);

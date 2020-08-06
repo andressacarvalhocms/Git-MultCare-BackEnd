@@ -49,10 +49,4 @@ public class Exame  {
 		this.setStatus("I");
 	  }
 	  
-	  @Override
-	  public String toString() {
-	    String info = String.format("Customer Info: nome = %s, resultado = %s", 
-	    		nome, resultado);
-	    return info;
-	  }
 }
