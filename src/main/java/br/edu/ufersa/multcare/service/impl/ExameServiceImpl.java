@@ -13,13 +13,16 @@ import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutent
 import static br.edu.ufersa.multcare.util.StringUtil.removerAcentos;
 import static br.edu.ufersa.multcare.util.StringUtil.substituirEspacosPorUnderScore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
@@ -56,22 +59,11 @@ public class ExameServiceImpl implements ExameService {
     }
 
     @Override
-	public List<Exame> cadastrarExamePorXml(List<Exame> examesXmlDTO) {
-  //  	 Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
-   // 	 ((Exame) examesXmlDTO).setUsuario(usuario);
-   // 	 ((Exame) examesXmlDTO).setDataCadastro(new Date());
-   // 	 ((Exame) examesXmlDTO).setStatus("A");
-   // 	 ((Exame) examesXmlDTO).setCodigoExame(getCodigoPorDescricao(((Exame) examesXmlDTO).getNome()).getCodigo());
-         List<Exame> exames = (List<Exame>) exameRepository.saveAll(examesXmlDTO);
-		return exames;
+    public List<Exame> cadastrarExamePorXml(List<Exame> exame) {
+
+    	return exame.stream().map(this::cadastrarExame).collect(Collectors.toList());
 	}
     
-  /*  @Transactional
-	public List<Exame> saveAllExame(List<Exame> exameList) {
-    	List<Exame> response = (List<Exame>) exameRepository.saveAll(exameList);
-		return response;
-	}
-    */
     @Override
     public Exame atualizarExame(Exame exame) {
         return exameRepository.save(exame);
