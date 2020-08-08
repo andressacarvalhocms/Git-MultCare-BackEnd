@@ -32,4 +32,10 @@ public class UsuarioDTO {
 
     private Character diabetico;
 
+    @NotNull(message = "O campo nome médico é obrigatório") @NotEmpty
+	private String nomeMedico;
+
+	private String emailMedico;
+
+
 }

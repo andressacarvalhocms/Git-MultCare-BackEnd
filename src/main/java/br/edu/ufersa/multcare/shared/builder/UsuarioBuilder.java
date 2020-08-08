@@ -57,4 +57,14 @@ public class UsuarioBuilder {
     public Usuario build() {
         return this.usuario;
     }
+    
+    public UsuarioBuilder comNomeMedico(String nomeMedico) {
+        this.usuario.setNomeMedico(nomeMedico);
+        return this;
+    }
+    
+    public UsuarioBuilder comEmailMedico(String emailMedico) {
+        this.usuario.setEmailMedico(emailMedico);
+        return this;
+    }
 }

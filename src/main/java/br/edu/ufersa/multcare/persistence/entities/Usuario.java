@@ -25,5 +25,7 @@ public class Usuario {
 	private char hipertenso;
 	private char diabetico;
 	private float peso;
+	private String nomeMedico;
+	private String emailMedico;
 
 }

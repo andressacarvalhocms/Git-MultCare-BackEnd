@@ -73,24 +73,13 @@ public class MedicamentoResource {
 		} ) ;
 	}
 	private void enviarEmail(Usuario user, Medicamento medicamento) throws MessagingException {
-/*		SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Hora do rémedio: "+medicamento.getNome()+"<br> Tipo: "+medicamento.getTipo()+"<br> Data inicial: "+medicamento.getDataInicial()+" Data Final: "+medicamento.getDataFinal());
-//        message.setTo(user.getLogin());
-        message.setSubject("Multcare");
-        message.setFrom("andressamelocms@gmail.com");
-        mailSender.send(message);
-  */
-		
 		 MimeMessage mail = mailSender.createMimeMessage();
-
          MimeMessageHelper helper = new MimeMessageHelper( mail );
          helper.setTo(user.getLogin());
          helper.setSubject( "Multcare" );
          helper.setText("Rémedio: "+medicamento.getNome()+"<br>Hora: "+medicamento.getHora()+"<br>Tipo: "+medicamento.getTipo()+"<br>Quantidade diária: "+medicamento.getQuantidadeDiaria(), true);
          helper.setFrom("andressamelocms@gmail.com");
          mailSender.send(mail);
-		
-		
 		System.out.println("Email enviado!");
 		}
 }

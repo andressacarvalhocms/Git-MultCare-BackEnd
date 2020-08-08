@@ -70,6 +70,8 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .comSexo(usuarioDTO.getSexo())
                 .comDiabetico(usuarioDTO.getDiabetico())
                 .comHipertenso(usuarioDTO.getHipertenso())
+                .comNomeMedico(usuarioDTO.getNomeMedico())
+                .comEmailMedico(usuarioDTO.getEmailMedico())
                 .build();
     }
 }
