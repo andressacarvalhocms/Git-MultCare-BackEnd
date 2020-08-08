@@ -9,17 +9,17 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum CodigoExame {
 
-    PRESSAO_ARTERIAL("Pressão Arterial", 1),
+    PRESSAO_ARTERIAL("pressão arterial", 1),
     CREATININA("creatinina", 2),
-    UREIA("Uréia", 3),
-    ALBUMINURIA("Albuminúria", 4),
-    POTASSIO("Potássio", 5),
-    TFG ("TFG", 6),
-    MICROALBUMINURIA("Microalbuminúria", 7),
-    GLICEMIA_JEJUM("Glicemia de jejum", 8),
-    GLIGEMICA_PRE_PRAN ("Glicemia pré-prandial", 9),
-    GLIGEMICA_POS_PRAN ("Glicemia pós-prandial", 10),
-    ALBUMINA("Albumina", 11);
+    UREIA("uréia", 3),
+    ALBUMINURIA("albuminúria", 4),
+    POTASSIO("potássio", 5),
+    TFG ("tfg", 6),
+    MICROALBUMINURIA("microalbuminúria", 7),
+    GLICEMIA_JEJUM("glicemia de jejum", 8),
+    GLIGEMICA_PRE_PRAN ("glicemia pré-prandial", 9),
+    GLIGEMICA_POS_PRAN ("glicemia pós-prandial", 10),
+    ALBUMINA("albumina", 11);
 
 
     private String descricao;

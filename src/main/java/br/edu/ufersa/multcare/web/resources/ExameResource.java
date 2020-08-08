@@ -48,12 +48,6 @@ public class ExameResource {
 		return ResponseEntity.ok(exameSalvo);
 	}
 
-/*	@PostMapping(name = "/exames/xml", consumes = { MediaType.APPLICATION_XML_VALUE,})
-	public ResponseEntity cadastrarExamesPorXml(@RequestBody ExamesXmlDTO examesXmlDTO) {
-		List<Exame> exames = exameService.cadastrarExamePorXml(examesXmlDTO);
-		return ResponseEntity.ok(exames);
-	}
-	*/
 
 	@RequestMapping(value = "/exames/xml", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_XML_VALUE,})
 	public List<Exame> cadastrarExamesPorXml(@RequestBody List<Exame> examesXmlDTO) {
@@ -61,27 +55,6 @@ public class ExameResource {
 		return exames;
 	}
 	
-	/*
-	@RequestMapping(value = "/saveall", method = RequestMethod.POST)
-	@ResponseBody
-	public List<Exame> saveAllExame(@RequestBody List<Exame> exameList) {
-		List<Exame> exameResponse = (List<Exame>) exameService.saveAllExame(exameList);
-		return exameResponse;
-	}
-	
-	 /* @PostMapping("/tutorials")
-	  public ResponseEntity<Exame> createExame(@RequestBody Exame exame) {
-		  
-	    try {
-	    	Exame _exame = exameRepository.save(new Exame(exame.getNome(), 
-	    			exame.getResultado()));
-	      return new ResponseEntity<>(_exame, HttpStatus.CREATED);
-	    } catch (Exception e) {
-	      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-	    }
-	  }
-	
-	*/
 	@DeleteMapping("/exames")
 	@ApiOperation(value="deleta um exame")
 	public ResponseEntity<Boolean> deletaExame(@RequestBody Exame exame){

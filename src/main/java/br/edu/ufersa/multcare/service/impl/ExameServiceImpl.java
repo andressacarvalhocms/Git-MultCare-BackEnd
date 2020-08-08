@@ -53,14 +53,13 @@ public class ExameServiceImpl implements ExameService {
         exame.setUsuario(usuario);
         exame.setDataCadastro(new Date());
         exame.setStatus("A");
-        exame.setCodigoExame(getCodigoPorDescricao(exame.getNome()).getCodigo());
+        exame.setCodigoExame(getCodigoPorDescricao(obterStringMinuscula(exame.getNome())).getCodigo());
 
         return exameRepository.save(exame);
     }
 
     @Override
     public List<Exame> cadastrarExamePorXml(List<Exame> exame) {
-
     	return exame.stream().map(this::cadastrarExame).collect(Collectors.toList());
 	}
     
@@ -91,7 +90,9 @@ public class ExameServiceImpl implements ExameService {
         return removerAcentos(substituirEspacosPorUnderScore(str)).toLowerCase();
     }
 
-	
+    public String obterStringMinuscula(String exame) {
+    	return exame.toLowerCase();  
+   	}
 
 	
 }
