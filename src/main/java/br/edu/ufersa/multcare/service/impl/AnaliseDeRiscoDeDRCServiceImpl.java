@@ -3,11 +3,17 @@ package br.edu.ufersa.multcare.service.impl;
 import br.edu.ufersa.multcare.persistence.entities.Analise;
 import br.edu.ufersa.multcare.persistence.entities.CodigoExame;
 import br.edu.ufersa.multcare.persistence.entities.Exame;
+import br.edu.ufersa.multcare.persistence.entities.Medicamento;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.AnaliseRepository;
 import br.edu.ufersa.multcare.persistence.repositories.ExameRepository;
 import br.edu.ufersa.multcare.service.AnaliseDeRiscoDeDRCService;
 import br.edu.ufersa.multcare.service.UsuarioService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import weka.classifiers.trees.J48;
 import weka.core.Attribute;
@@ -15,6 +21,8 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +88,9 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.invalidarExamesUtilizados();
         atualizarStatusExames(analise.getExames());
 
+        
+		enviarEmail(usuario, analise);
+		
         return analise;
     }
 
@@ -108,7 +119,8 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         analise.setTfg(obterResultadoExame(exameTfg));
         analise.setExames(asList(exameCreatina, exameUreia, exameMicroalbuminuria, exameTfg));
 
-        return analise;
+        
+            return analise;
     }
 
     private Double obterResultadoExame(Exame exame) {
@@ -123,4 +135,17 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
     private void atualizarStatusExames(List<Exame> exames) {
         exameRepository.saveAll(exames);
     }
+    
+
+    @Autowired private JavaMailSender mailSender;
+	private void enviarEmail(Usuario user, Analise analise) throws MessagingException {
+		 MimeMessage mail = mailSender.createMimeMessage();
+         MimeMessageHelper helper = new MimeMessageHelper( mail );
+         helper.setTo(user.getEmailMedico());
+         helper.setSubject( "Multcare" );
+         helper.setText("Analise: "+analise.getUreia(), true);
+         helper.setFrom("andressamelocms@gmail.com");
+         mailSender.send(mail);
+		System.out.println("Email enviado!");
+		}
 }
