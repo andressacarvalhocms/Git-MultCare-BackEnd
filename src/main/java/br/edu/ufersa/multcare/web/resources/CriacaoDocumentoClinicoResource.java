@@ -1,9 +1,20 @@
-package br.edu.ufersa.multcare.controllers.cda;
+package br.edu.ufersa.multcare.web.resources;
 
-import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
-//import static org.apache.commons.io.FileUtils.readFileToByteArray;
-import static org.apache.commons.io.FileUtils.readFileToByteArray;
+import br.edu.ufersa.multcare.controllers.cda.DocumentoClinico;
+import br.edu.ufersa.multcare.model.bean.cda.Arquivo;
+import br.edu.ufersa.multcare.model.bean.cda.Componentes;
+import br.edu.ufersa.multcare.model.dao.cda.ArquivoDAO;
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import org.cdapi.bean.*;
+import org.cdapi.document.ClinicalDocument;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -11,34 +22,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.servlet.ServletContext;
-// import javax.servlet.http.HttpServletRequest;
-
-import org.cdapi.bean.Authenticator;
-import org.cdapi.bean.Author;
-import org.cdapi.bean.Header;
-import org.cdapi.bean.Patient;
-import org.cdapi.bean.RelatedDocument;
-import org.cdapi.bean.ResponsibleParty;
-import org.cdapi.document.ClinicalDocument;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import br.edu.ufersa.multcare.model.bean.cda.Arquivo;
-import br.edu.ufersa.multcare.model.bean.cda.Componentes;
-import br.edu.ufersa.multcare.model.dao.cda.ArquivoDAO;
-import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
+import static org.apache.commons.io.FileUtils.readFileToByteArray;
 
 
 /**
  *
  * @author Gyovanne Cavalcanti
  */
-@Controller
-public class CriacaoDocumentoClinico extends DocumentoClinico {
+@RestController
+@RequestMapping(value="/api/cda")
+public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
 
     @Autowired
     ServletContext context;
@@ -56,7 +50,7 @@ public class CriacaoDocumentoClinico extends DocumentoClinico {
 
     /**
      *
-     * @param request
+     *
      * @param model
      * @param cda
      * @param comp
@@ -85,7 +79,7 @@ public class CriacaoDocumentoClinico extends DocumentoClinico {
 
     /**
      *
-     * @param request
+     *
      * @param model
      * @param cda
      * @param componentes
