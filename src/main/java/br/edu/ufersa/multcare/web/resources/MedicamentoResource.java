@@ -7,6 +7,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import br.edu.ufersa.multcare.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -31,6 +32,9 @@ public class MedicamentoResource {
 	
 	@Autowired
 	private MedicamentoService medicamentoService;
+
+	@Autowired
+	private EmailService emailService;
 	
 	@GetMapping("/medicamentoUsuario")
 	public ResponseEntity<List<Medicamento>> listaMedicamentoUsuario(){
@@ -55,8 +59,6 @@ public class MedicamentoResource {
 		Medicamento medicamentoAtualizado = medicamentoService.atualizarMedicamento(medicamento);
 		return ResponseEntity.ok(medicamentoAtualizado);
 	}
-	
-	
 
     @Autowired private JavaMailSender mailSender;
     @Scheduled(fixedDelay = 50000)
@@ -65,21 +67,12 @@ public class MedicamentoResource {
 		medicamentos.forEach(med->{
 			Usuario user = med.getUsuario();
 			try {
-				enviarEmail(user, med);
+				String conteudo = "Rémedio: "+ med.getNome()+"<br>Hora: "+ med.getHora()+"<br>Tipo: "+ med.getTipo()+"<br>Quantidade diária: "+ med.getQuantidadeDiaria();
+				emailService.enviarEmail(user.getLogin(), conteudo);
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} ) ;
 	}
-	private void enviarEmail(Usuario user, Medicamento medicamento) throws MessagingException {
-		 MimeMessage mail = mailSender.createMimeMessage();
-         MimeMessageHelper helper = new MimeMessageHelper( mail );
-         helper.setTo(user.getLogin());
-         helper.setSubject( "Multcare" );
-         helper.setText("Rémedio: "+medicamento.getNome()+"<br>Hora: "+medicamento.getHora()+"<br>Tipo: "+medicamento.getTipo()+"<br>Quantidade diária: "+medicamento.getQuantidadeDiaria(), true);
-         helper.setFrom("andressamelocms@gmail.com");
-         mailSender.send(mail);
-		System.out.println("Email enviado!");
-		}
 }
