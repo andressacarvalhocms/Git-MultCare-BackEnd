@@ -86,9 +86,9 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
 
         // TODO Montar conteudo do email.
         String exames = "Exames utilizados: <br> Creatina: " +
-                analise.getCreatinina() + " mg/DL <br>" +
-                analise.getUreia() + " mg/DL <br>" +
-                analise.getMicroalbuminaria() + " mmHg <br>" +
+                analise.getCreatinina() + " mg/DL <br> Uréia: " +
+                analise.getUreia() + " mg/DL <br> Microalbuminaria: " +
+                analise.getMicroalbuminaria() + " mmHg <br> TFG: " +
                 analise.getTfg() + " mL/min/1,73 m² <br><br>";
         String resultado = "O resultado da análise é: " + analise.getClassificacao();
 		emailService.enviarEmail(usuario.getLogin(), exames.concat(resultado));

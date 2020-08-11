@@ -14,7 +14,7 @@ import br.edu.ufersa.multcare.persistence.entities.Medicamento;
 public class Componentes {
 
     private List<Exame> exameslaboratoriais;
-    private List<Alergia> alergias;
+    private List<Alergia> listarAlergiasPorUsuario;
     private List<Medicamento> medicamentos;
     private List<Analise> diagnostico;
 //    private List<Conteudo> historicomedico;
@@ -67,7 +67,7 @@ public class Componentes {
      * @return
      */
     public List<Alergia> getAlergias() {
-        return alergias;
+        return listarAlergiasPorUsuario;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Componentes {
      * @param alergias
      */
     public void setAlergias(List<Alergia> alergias) {
-        this.alergias = alergias;
+        this.listarAlergiasPorUsuario = alergias;
     }
 
     /**

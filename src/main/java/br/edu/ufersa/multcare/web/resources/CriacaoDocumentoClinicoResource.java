@@ -5,8 +5,8 @@ import br.edu.ufersa.multcare.model.bean.cda.Arquivo;
 import br.edu.ufersa.multcare.model.bean.cda.Componentes;
 import br.edu.ufersa.multcare.model.dao.cda.ArquivoDAO;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
-import org.cdapi.bean.*;
-import org.cdapi.document.ClinicalDocument;
+import cdapi.bean.*;
+import cdapi.document.ClinicalDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -63,17 +63,22 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
     	
     	cda.setHeader(alterarDadosHeader(null, 1));
         cda.setAuthor(obterDadosMedico(user));
-        Arquivo a = new Arquivo();
-        a.setIdUsuarioArquivo(idUsuario);
-        a.setDataArquivo(dataAtual("dd/MMMM/yyyy"));
-        a.setNomeArquivo(user.getNome() + " | V" + getVersion());
-        a.setFileArquivo(readFileToByteArray(gravarDadosDocumentoClinico(cda, comp)));
-        a.setVersaoArquivo(getVersion());
-        new ArquivoDAO().adicionarDocumentoClinico(a);
+       // Arquivo a = new Arquivo();
+       // a.setIdUsuarioArquivo(idUsuario);
+        //a.setDataArquivo(dataAtual("dd/MMMM/yyyy"));
+//        a.setNomeArquivo(user.getNome() + " | V" + getVersion());
+      //  a.setNomeArquivo("teste" + " | V" );
+        //  a.setFileArquivo(readFileToByteArray(gravarDadosDocumentoClinico(cda, comp)));
+        // gravarDadosDocumentoClinico(cda, comp);
+        
+    	
+        gravarDadosDocumentoClinico(cda,comp);
+       // a.setVersaoArquivo(getVersion());
+  /*      new ArquivoDAO().adicionarDocumentoClinico(a);
         model.addAttribute("titlePage", "MultCare Paciente - Manipular");
         model.addAttribute("status", false);
         model.addAttribute("notificacao", "Documento ClÃ­nico criado com sucesso!");
-        listarDocumentosClinicos(model, user, 1);
+        listarDocumentosClinicos(model, user, 1); */
         return "./ler";
     }
 
@@ -87,38 +92,22 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/editar", method = RequestMethod.POST)
-    public String editarDocumentoClinico(Usuario user, ModelMap model, ClinicalDocument cda, Componentes componentes, Arquivo file) throws IOException {
-    	   Integer idUsuario = obterIdUsuarioAutenticado();
-    	     
-    	
-    	new ArquivoDAO().copiarDocumentoClinico(file.getIdArquivo());
-        cda.setHeader(alterarDadosHeader(cda.getHeader(), 0));
-        cda.setAuthor(obterDadosMedico(user));
-        Arquivo arquivo = new Arquivo();
-        arquivo.setIdUsuarioArquivo(idUsuario);
-        arquivo.setDataArquivo(dataAtual("dd/MMMM/yyyy"));
-        arquivo.setNomeArquivo(user.getNome()+ " | V" + getVersion());
-        arquivo.setFileArquivo(readFileToByteArray(gravarDadosDocumentoClinico(cda, componentes)));
-        arquivo.setVersaoArquivo(getVersion());
-        new ArquivoDAO().atualizarDocumentoClinico(arquivo, file);
-        model.addAttribute("titlePage", "MultCare Paciente - Manipular");
-        model.addAttribute("status", false);
-        model.addAttribute("notificacao", "Documento ClÃ­nico criado com sucesso!");
-        listarDocumentosClinicos(model, user, 1);
-        return "./ler";
-    }
-
+ 
     private File gravarDadosDocumentoClinico(ClinicalDocument clinicalDocument, Componentes c) throws IOException {
         clinicalDocument.setHeader(clinicalDocument.getHeader());
-        clinicalDocument.setPatient(alterarDadosPaciente(clinicalDocument.getPatient()));
+        clinicalDocument.setPatient((clinicalDocument.getPatient()));
         clinicalDocument.setAuthor(clinicalDocument.getAuthor());
         clinicalDocument.setRelated(alterarDadosDocumentosRelacionados(clinicalDocument.getHeader()));
-        clinicalDocument.setResponsibleParty(alterarDadosResponsavel(clinicalDocument.getResponsibleParty()));
+         clinicalDocument.setResponsibleParty((clinicalDocument.getResponsibleParty()));
+         
         clinicalDocument.setAuthenticator(alterarDadosAutenticacao());
-        ArrayList<org.cdapi.bean.Component> components = escreverComponentes(c);
+              
+        ArrayList<cdapi.bean.Component> components = escreverComponentes(c);
+        
         if (components != null) {
             clinicalDocument.setComponents(components);
+            System.out.print("entrou");
+            
         }
         return clinicalDocument.toGenerateCDAFile();
     }
@@ -127,8 +116,8 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
         return !(info == null || info.equals("") || info.isEmpty());
     }
 
-    private ArrayList<org.cdapi.bean.Component> escreverComponentes(Componentes c) {
-        ArrayList<org.cdapi.bean.Component> components = new ArrayList<>();
+    private ArrayList<cdapi.bean.Component> escreverComponentes(Componentes c) {
+        ArrayList<cdapi.bean.Component> components = new ArrayList<>();
         if (c.getExameslaboratoriaisfixos() != null) {
             ArrayList<Object> exameslaboratoriais = new ArrayList<>();
             for (int i = 0; i < c.getExameslaboratoriaisfixos().size(); i++) {
@@ -141,95 +130,46 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
                     }
                 }
             }
-            components.add(new org.cdapi.bean.Component("Exames Laboratoriais", exameslaboratoriais));
+            System.out.print("entrou");
+            components.add(new cdapi.bean.Component("Exames Laboratoriais", exameslaboratoriais));
         }
         if (c.getDiagnostico() != null) {
             ArrayList<Object> diagnostico = new ArrayList<>();
             for (int i = 0; i < c.getDiagnostico().size(); i++) {
                 diagnostico.add(c.getDiagnostico().get(i).getClassificacao());
             }
-            components.add(new org.cdapi.bean.Component("DiagnÃ³stico da DRC", diagnostico));
+            components.add(new cdapi.bean.Component("Diagnostico da DRC", diagnostico));
         }
-        if (c.getAlergias() != null) {
+    /*    if (c.getAlergias() != null) {
             ArrayList<Object> alergias = new ArrayList<>();
             for (int i = 0; i < c.getAlergias().size(); i++) {
                 if (validaCampos(c.getAlergias().get(i).getNome().toString())) {
                     alergias.add(c.getAlergias().get(i).getNome());
                 }
             }
-            components.add(new org.cdapi.bean.Component("Alergias", alergias));
+            components.add(new cdapi.bean.Component("Alergias", alergias));
         }
-        if (c.getMedicamentos() != null) {
+      */  if (c.getMedicamentos() != null) {
             ArrayList<Object> medicamentos = new ArrayList<>();
             for (int i = 0; i < c.getMedicamentos().size(); i++) {
                 if (validaCampos(c.getMedicamentos().get(i).getNome().toString())) {
                     medicamentos.add(c.getMedicamentos().get(i).getNome());
                 }
             }
-            components.add(new org.cdapi.bean.Component("Medicamentos", medicamentos));
+            components.add(new cdapi.bean.Component("Medicamentos", medicamentos));
         }
 
-        /*
-        if (c.getHistoricomedico() != null) {
-            ArrayList<Object> historicomedico = new ArrayList<>();
-            for (int i = 0; i < c.getHistoricomedico().size(); i++) {
-                if (validaCampos(c.getHistoricomedico().get(i).getConteudo().toString())) {
-                    historicomedico.add(c.getHistoricomedico().get(i).getConteudo());
-                }
-            }
-            components.add(new org.cdapi.bean.Component("HistÃ³rico MÃ©dico", historicomedico));
-        }
-        if (c.getHistoricofamiliar() != null) {
-            ArrayList<Object> historicofamiliar = new ArrayList<>();
-            for (int i = 0; i < c.getHistoricofamiliar().size(); i++) {
-                if (validaCampos(c.getHistoricofamiliar().get(i).getConteudo().toString())) {
-                    historicofamiliar.add(c.getHistoricofamiliar().get(i).getConteudo());
-                }
-            }
-            components.add(new org.cdapi.bean.Component("HistÃ³rico Familiar", historicofamiliar));
-        }
-        if (c.getHistoricosaude() != null) {
-            ArrayList<Object> historicosaude = new ArrayList<>();
-            for (int i = 0; i < c.getHistoricosaude().size(); i++) {
-                if (validaCampos(c.getHistoricosaude().get(i).getConteudo().toString())) {
-                    historicosaude.add(c.getHistoricosaude().get(i).getConteudo());
-                }
-            }
-            components.add(new org.cdapi.bean.Component("HistÃ³rico de SaÃºde", historicosaude));
-        }
-        if (c.getExames() != null) {
-            ArrayList<Object> exames = new ArrayList<>();
-            for (int i = 0; i < c.getExames().size(); i++) {
-                if (validaCampos(c.getExames().get(i).getConteudo().toString())) {
-                    exames.add(c.getExames().get(i).getConteudo());
-                }
-            }
-            components.add(new org.cdapi.bean.Component("Exames MÃ©trico/FÃ­sico", exames));
-        }
-        if (c.getTratamento() != null) {
-            ArrayList<Object> tratamento = new ArrayList<>();
-            for (int i = 0; i < c.getTratamento().size(); i++) {
-                if (validaCampos(c.getTratamento().get(i).getConteudo().toString())) {
-                    tratamento.add(c.getTratamento().get(i).getConteudo());
-                }
-            }
-            components.add(new org.cdapi.bean.Component("Tratamento", tratamento));
-        } */
         return components;
     }
 
     private static Author obterDadosMedico(Usuario user) {
         Author author = new Author();
-    //    author.setAddr((String) request.getSession().getAttribute("enderecoUsuario"));
-     //   author.setFamily((String) request.getSession().getAttribute("sobrenomeUsuario"));
-     //   author.setCrm((String) request.getSession().getAttribute("crmUsuario"));
         author.setName(user.getNomeMedico());
-      //  author.setPhone((String) request.getSession().getAttribute("telefoneUsuario"));
         return author;
     }
 
     private Patient alterarDadosPaciente(Patient p) {
-        p.setBirth(validarData(p.getBirth(), "dd/MM/yyyy", 0));
+        p.setBirth(validarData("13/11/1991", "dd/MM/yyyy", 0));
         p.setCodeSystem("2.16.840.1.113883.5.1");
         p.setIdExtension("M555");
         return p;
@@ -268,13 +208,13 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
         if (op == 1) {
             setVersion(1.0);
         } else {
-            setVersion(alterarVersÃ£oDocumento(header));
+            setVersion(alterarVersaoDocumento(header));
         }
         h.setVersion(getVersion());
         return h;
     }
 
-    private static Double alterarVersÃ£oDocumento(Header header) {
+    private static Double alterarVersaoDocumento(Header header) {
         String v = String.format("%.1f", header.getVersion() + 0.1);
         String replaceAll = v.replaceAll(",", ".");
         return Double.parseDouble(replaceAll);

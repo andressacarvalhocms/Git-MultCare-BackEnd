@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.cdapi.bean.Component;
-import org.cdapi.document.ClinicalDocument;
+import cdapi.bean.Component;
+import cdapi.document.ClinicalDocument;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;

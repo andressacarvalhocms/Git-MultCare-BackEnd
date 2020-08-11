@@ -87,7 +87,7 @@
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute type="xs:byte" name="value"/>
+                <xs:attribute type="xs:float" name="value"/>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>
@@ -111,7 +111,7 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:long" name="extension"/>
+                            <xs:attribute type="xs:int" name="extension"/>
                             <xs:attribute type="xs:string" name="root"/>
                           </xs:extension>
                         </xs:simpleContent>
@@ -152,7 +152,7 @@
                             <xs:complexType>
                               <xs:simpleContent>
                                 <xs:extension base="xs:string">
-                                  <xs:attribute type="xs:long" name="value"/>
+                                  <xs:attribute type="xs:int" name="value"/>
                                 </xs:extension>
                               </xs:simpleContent>
                             </xs:complexType>
@@ -300,7 +300,7 @@
                             <xs:complexType>
                               <xs:simpleContent>
                                 <xs:extension base="xs:string">
-                                  <xs:attribute type="xs:long" name="extension"/>
+                                  <xs:attribute type="xs:int" name="extension"/>
                                   <xs:attribute type="xs:string" name="root"/>
                                 </xs:extension>
                               </xs:simpleContent>
@@ -400,7 +400,7 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="value"/>
+                            <xs:attribute type="xs:float" name="value"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -432,7 +432,7 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:long" name="value"/>
+                            <xs:attribute type="xs:int" name="value"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -457,7 +457,7 @@
                                     <xs:sequence>
                                       <xs:element type="xs:string" name="state"/>
                                       <xs:element type="xs:string" name="city"/>
-                                      <xs:element type="xs:long" name="postalCode"/>
+                                      <xs:element type="xs:string" name="postalCode"/>
                                       <xs:element type="xs:string" name="streetAddressLine"/>
                                     </xs:sequence>
                                   </xs:complexType>
@@ -479,7 +479,7 @@
                                         <xs:complexType>
                                           <xs:sequence>
                                             <xs:element type="xs:string" name="family"/>
-                                            <xs:element type="xs:string" name="given" maxOccurs="unbounded" minOccurs="0"/>
+                                            <xs:element type="xs:string" name="given"/>
                                             <xs:element type="xs:string" name="suffix"/>
                                           </xs:sequence>
                                         </xs:complexType>
@@ -518,7 +518,7 @@
                                           <xs:sequence>
                                             <xs:element type="xs:string" name="state"/>
                                             <xs:element type="xs:string" name="city"/>
-                                            <xs:element type="xs:long" name="postalCode"/>
+                                            <xs:element type="xs:string" name="postalCode"/>
                                             <xs:element type="xs:string" name="streetAddressLine"/>
                                           </xs:sequence>
                                         </xs:complexType>
@@ -559,32 +559,11 @@
                           <xs:element name="section">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="templateId" minOccurs="0">
-                                  <xs:complexType>
-                                    <xs:simpleContent>
-                                      <xs:extension base="xs:string">
-                                        <xs:attribute type="xs:string" name="root" use="optional"/>
-                                      </xs:extension>
-                                    </xs:simpleContent>
-                                  </xs:complexType>
-                                </xs:element>
-                                <xs:element name="code" minOccurs="0">
-                                  <xs:complexType>
-                                    <xs:simpleContent>
-                                      <xs:extension base="xs:string">
-                                        <xs:attribute type="xs:string" name="code" use="optional"/>
-                                        <xs:attribute type="xs:string" name="codeSystem" use="optional"/>
-                                        <xs:attribute type="xs:string" name="codeSystemName" use="optional"/>
-                                        <xs:attribute type="xs:string" name="displayName" use="optional"/>
-                                      </xs:extension>
-                                    </xs:simpleContent>
-                                  </xs:complexType>
-                                </xs:element>
                                 <xs:element type="xs:string" name="title"/>
                                 <xs:element name="text">
-                                  <xs:complexType mixed="true">
+                                  <xs:complexType>
                                     <xs:sequence>
-                                      <xs:element name="list" minOccurs="0">
+                                      <xs:element name="list">
                                         <xs:complexType>
                                           <xs:sequence>
                                             <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
@@ -601,8 +580,6 @@
                                   </xs:complexType>
                                 </xs:element>
                               </xs:sequence>
-                              <xs:attribute type="xs:string" name="classCode" use="optional"/>
-                              <xs:attribute type="xs:string" name="moodCode" use="optional"/>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>

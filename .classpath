@@ -28,7 +28,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Mestrado/DISSERTACAO GITHUB MULTCARE/Git-MultCare-BackEnd/CDApi-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Mestrado/DISSERTACAO GITHUB MULTCARE/Git-MultCare-BackEnd/commons-io-2.6-javadoc.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
