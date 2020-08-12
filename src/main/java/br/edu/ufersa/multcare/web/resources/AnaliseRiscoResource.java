@@ -32,4 +32,10 @@ public class AnaliseRiscoResource {
 		List<Analise> analises = analiseDeRiscoDeDRCService.obterAnalisesDoUsuarioAutenticado();
 		return ResponseEntity.ok(analises);
 	}
+	
+	@GetMapping("/obter-ultimaanalises")
+	public ResponseEntity<?> obterUltimaAnalisesUsuarioAutenticado() {
+		List<Analise> analises = analiseDeRiscoDeDRCService.obterUltimaAnalisesPorUsuario();
+		return ResponseEntity.ok(analises);
+	}
 }

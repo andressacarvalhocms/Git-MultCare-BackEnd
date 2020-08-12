@@ -5,13 +5,10 @@ import static java.lang.Boolean.TRUE;
 import java.util.List;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
-import br.edu.ufersa.multcare.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ufersa.multcare.persistence.entities.Medicamento;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import br.edu.ufersa.multcare.service.EmailService;
 import br.edu.ufersa.multcare.service.MedicamentoService;
 
 

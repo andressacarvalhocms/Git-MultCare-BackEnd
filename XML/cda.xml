@@ -5,11 +5,11 @@
    <templateId root='2.16.840.1.113883.10.20.1'/>
    <id root='M345' extension='2.16.840.1.113883.3.933'/>
    <code code='410.9' displayName='MultCare Paciente' codeSystem='2.16.840.1.113883.6.103' codeSystemName='ICD-9-CM'/>
-   <effectiveTime value="11082020"/>
+   <effectiveTime value="12082020"/>
    <confidentialityCode code="N" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'/>
    <setId extension="MM1" root="2.16.840.1.113883.3.933"/>
    <versionNumber value="1.0"/>
-   <copyTime value='11082020'/>
+   <copyTime value='12082020'/>
    <recordTarget>
       <patientRole>
          <id extension="0" root="2.16.840.1.113883.3.933"/>
@@ -39,15 +39,15 @@
       </patientRole>
    </recordTarget>
    <author>
-      <time value = "11082020"/>
+      <time value = "12082020"/>
       <assignedAuthor>
-         <id root='2.16.840.1.113883.3.933' extension='nullFlavor'/>
-         <addr>nullFlavor</addr>
-         <telecom value='nullFlavor'/>
+         <id root='2.16.840.1.113883.3.933' extension='crmUsuario'/>
+         <addr>enderecoUsuario</addr>
+         <telecom value='telefoneUsuario'/>
          <assignedPerson>
             <name>
-               <given>null</given>
-               <family>nullFlavor</family>
+               <given>nomeUsuario</given>
+               <family>sobrenomeUsuario</family>
             </name>
          </assignedPerson>
       </assignedAuthor>
@@ -61,14 +61,14 @@
       </assignedCustodian>
    </custodian>
    <legalAuthenticator>
-      <time value="11082020"/>
+      <time value="12082020"/>
       <signatureCode code="S"/>
       <assignedEntity>
          <id extension="M555" root="2.16.840.1.113883.3.933"/>
          <assignedPerson>
             <name>
-               <given>null</given>
-               <family>nullFlavor</family>
+               <given>nomeUsuario</given>
+               <family>sobrenomeUsuario</family>
             </name>
          </assignedPerson>
       </assignedEntity>
@@ -122,6 +122,89 @@
    <component>
       <structuredBody>
          <languageCode code='pt-BR'/>
+         <component>
+            <section>
+            <title>Medicamentos</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>teste</content>
+                     </item>
+                     <item>
+                       <content>paracetamol</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>Alergia</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>dipirona</content>
+                     </item>
+                     <item>
+                       <content>camarão</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>Creatinina</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>25.0</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>Ureia</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>220.0</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>TFG</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>100.0</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>Microalbuminaria</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>22.0</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
+         <component>
+            <section>
+            <title>Diagnostico</title>
+               <text>
+                  <list>
+                     <item>
+                       <content>BAIXO RISCO</content>
+                     </item>
+                  </list>
+               </text>
+            </section></component>
       </structuredBody>
    </component>
 </ClinicalDocument>

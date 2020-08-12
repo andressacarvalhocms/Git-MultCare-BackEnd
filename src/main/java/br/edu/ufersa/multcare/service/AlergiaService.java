@@ -1,11 +1,13 @@
 package br.edu.ufersa.multcare.service;
 
-import br.edu.ufersa.multcare.persistence.entities.Alergia;
-
 import java.util.List;
+
+import br.edu.ufersa.multcare.persistence.entities.Alergia;
 
 public interface AlergiaService {
 
+	List<Alergia> listarAlergiaUsuarioLogado();
+	
     List<Alergia> listarAlergiasPorUsuario();
 
     Alergia cadastrarAlergia(Alergia alergia);

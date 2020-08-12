@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import weka.classifiers.trees.J48;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,12 +29,13 @@ public class Analise {
 	private Double tfg;
 	private String classificacao;
 	private Date dataCadastro;
-	private Double glicemia_jejum;
+
+/*	private Double glicemia_jejum;
 	private Double glicemia_pre_pran; 
 	private Double glicemia_pos_pran; 
 	private Double pressao_arterial;
 	private Double monitoramento;
-
+*/
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;

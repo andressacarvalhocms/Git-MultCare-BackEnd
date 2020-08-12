@@ -15,5 +15,6 @@ public interface AlergiaRepository extends JpaRepository<Alergia, Long>{
 	@Query("select al from Alergia al where al.usuario.id = ?1")
 	List<Alergia> listarAlergiasPorUsuario(Integer id);
 
+	
 	Alergia findById(long id);
 }

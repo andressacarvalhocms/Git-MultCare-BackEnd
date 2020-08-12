@@ -1,6 +1,7 @@
 package br.edu.ufersa.multcare.service.impl;
 
 import br.edu.ufersa.multcare.persistence.entities.Alergia;
+import br.edu.ufersa.multcare.persistence.entities.Medicamento;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.AlergiaRepository;
 import br.edu.ufersa.multcare.service.AlergiaService;
@@ -29,6 +30,12 @@ public class AlergiaServiceImpl implements AlergiaService {
     public List<Alergia> listarAlergiasPorUsuario() {
         return alergiaRepository.listarAlergiasPorUsuario(obterIdUsuarioAutenticado());
     }
+
+    @Override
+    public List<Alergia> listarAlergiaUsuarioLogado() {
+        return alergiaRepository.listarAlergiasPorUsuario(obterIdUsuarioAutenticado());
+    }
+    
 
     @Override
     public Alergia cadastrarAlergia(Alergia alergia) {

@@ -137,4 +137,11 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
     private void atualizarStatusExames(List<Exame> exames) {
         exameRepository.saveAll(exames);
     }
+
+
+	@Override
+	public List<Analise> obterUltimaAnalisesPorUsuario() {
+        Integer idUsuario = obterIdUsuarioAutenticado();
+        return analiseRepository.obterUltimaAnalisesPorUsuario(idUsuario);
+	}
 }

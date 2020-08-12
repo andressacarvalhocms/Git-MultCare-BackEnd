@@ -31,6 +31,7 @@ public class AlergiaResource {
 		return ResponseEntity.ok(alergias);
 	}
 
+	
 	@PostMapping("/alergia")
 	public ResponseEntity<Alergia> salvaAlergia(@RequestBody Alergia alergia) {
 		Alergia alergiaSalva = alergiaService.cadastrarAlergia(alergia);
