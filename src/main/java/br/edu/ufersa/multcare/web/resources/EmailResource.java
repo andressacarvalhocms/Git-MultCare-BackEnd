@@ -1,4 +1,6 @@
-package br.edu.ufersa.multcare.service.impl;
+package br.edu.ufersa.multcare.web.resources;
+
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -7,39 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ufersa.multcare.service.EmailService;
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import br.edu.ufersa.multcare.service.UsuarioService;
 
-//@Component
-@Service
-public class EmailServiceImpl implements EmailService {
-
-
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Override
-    public void enviarEmail(String destinatario, String conteudo) throws MessagingException {
-
-
-        MimeMessage mail = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper( mail );
-        helper.setTo(destinatario);
-        helper.setSubject( "Multcare" );
-        helper.setText(conteudo, true);
-        helper.setFrom("andressamelocms@gmail.com");
-        mailSender.send(mail);
-        System.out.println("Email enviado!");
-    }
-    
+@RestController
+@RequestMapping(value="/api")
+public class EmailResource {
+	 private UsuarioService usuarioService;
 
 
     @Autowired
     private JavaMailSender emailSender;
-    @Override
+    
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
     public void enviarEmailAnexado(String destinatario, String conteudo, Integer idArquivo) throws MessagingException {
-    	 MimeMessage message = emailSender.createMimeMessage();
+
+        Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
+
+    	conteudo = "Segue em anexo o arquivo CDA do paciente: " + usuario.getNome();
+        idArquivo = obterIdUsuarioAutenticado();
+        
+        destinatario = usuario.getEmailMedico();
+        
+        System.out.print(obterIdUsuarioAutenticado());    	
+    	MimeMessage message = emailSender.createMimeMessage();
          MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
          helper.setTo(destinatario);
@@ -51,5 +48,5 @@ public class EmailServiceImpl implements EmailService {
          emailSender.send(message);
         System.out.println("Email enviado!");
     }
-    
+
 }

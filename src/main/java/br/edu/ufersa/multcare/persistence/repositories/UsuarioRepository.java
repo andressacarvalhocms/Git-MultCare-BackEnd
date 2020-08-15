@@ -1,10 +1,11 @@
 package br.edu.ufersa.multcare.persistence.repositories;
 
-import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
@@ -16,5 +17,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	Boolean existsUsuarioByNome(String nome);
 
 	Usuario findUsuarioById(Integer id);
+	
 	
 }

@@ -1,14 +1,15 @@
 package br.edu.ufersa.multcare.service.impl;
 
+import java.util.Optional;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.UsuarioRepository;
 import br.edu.ufersa.multcare.service.UsuarioService;
 import br.edu.ufersa.multcare.shared.builder.UsuarioBuilder;
 import br.edu.ufersa.multcare.shared.dto.UsuarioDTO;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 
 @Component
@@ -74,4 +75,5 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .comEmailMedico(usuarioDTO.getEmailMedico())
                 .build();
     }
+
 }

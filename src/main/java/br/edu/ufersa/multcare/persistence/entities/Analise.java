@@ -29,7 +29,7 @@ public class Analise {
 	private Double tfg;
 	private String classificacao;
 	private Date dataCadastro;
-
+//	private long arvore;
 /*	private Double glicemia_jejum;
 	private Double glicemia_pre_pran; 
 	private Double glicemia_pos_pran; 

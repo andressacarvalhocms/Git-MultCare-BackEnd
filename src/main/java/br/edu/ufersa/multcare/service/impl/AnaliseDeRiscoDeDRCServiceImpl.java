@@ -85,14 +85,18 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
         atualizarStatusExames(analise.getExames());
 
         // TODO Montar conteudo do email.
-        String exames = "Exames utilizados: <br> Creatina: " +
+/*        String exames = "Exames utilizados: <br> Creatina: " +
                 analise.getCreatinina() + " mg/DL <br> Uréia: " +
                 analise.getUreia() + " mg/DL <br> Microalbuminaria: " +
                 analise.getMicroalbuminaria() + " mmHg <br> TFG: " +
                 analise.getTfg() + " mL/min/1,73 m² <br><br>";
-        String resultado = "O resultado da análise é: " + analise.getClassificacao();
-		emailService.enviarEmail(usuario.getLogin(), exames.concat(resultado));
-		
+  */    System.out.print(pred);
+  
+        if (pred != 2.0) {
+        	String resultado = "Segue em anexo o arquivo CDA do paciente: " + usuario.getNome();
+			Integer idArquivo = obterIdUsuarioAutenticado();
+			emailService.enviarEmailAnexado(usuario.getEmailMedico(), resultado, idArquivo);
+        }	
         return analise;
     }
 

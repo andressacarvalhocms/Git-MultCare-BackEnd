@@ -31,7 +31,7 @@ import br.edu.ufersa.multcare.persistence.entities.Usuario;
 @Controller
 public class DocumentoClinico {
 
-    private File file;
+    protected File file;
     private int idArquivo;
     private int idUsuario;
     private double version;

@@ -1,14 +1,27 @@
 package cdapi.document;
 
-import cdapi.bean.*;
-import cdapi.validator.ValidationCDA;
-import cdapi.structure.*;
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import javax.transaction.Transactional;
+
+import org.springframework.web.bind.annotation.RestController;
+
+import cdapi.bean.Authenticator;
+import cdapi.bean.Author;
+import cdapi.bean.Component;
+import cdapi.bean.Header;
+import cdapi.bean.Patient;
+import cdapi.bean.RelatedDocument;
+import cdapi.bean.ResponsibleParty;
+import cdapi.structure.DocumentStructure;
+import cdapi.structure.XMLRead;
+import cdapi.validator.ValidationCDA;
 
 /**
  * Classe responsavel pela escrita, leitura e validaçao do Documento CDA.
@@ -17,6 +30,8 @@ import java.util.Calendar;
  * @version 1.0
  * @see https://sites.google.com/view/cdapi
  */
+
+@RestController
 public class ClinicalDocument {
 
     private static String local(String fileName) {
@@ -481,20 +496,26 @@ public class ClinicalDocument {
      * {@code clinicalDocument.toGenerateCDAFile(String path);}
      * </pre>
      *
-     * </blockquote>
+     * </blockquote>.
      *
      * @param path local para onde sera escrito o arquivo XML
      * @return um valor booleano para fins de verificação.
      */
+
+
+    @Transactional
     public File toGenerateCDAFile(String path) {
+    	
         if (this.status == true) {
             System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument não pode conter parâmetros!");
             return null;
         }
         toInitializeObjects();
         String idFile;
+        Integer nomeArquivo = obterIdUsuarioAutenticado();
+        System.out.print(nomeArquivo);
         if (patient.getId() == 0) {
-            idFile = "cda.xml";
+            idFile = "cda"+nomeArquivo+".xml";
         } else {
             idFile = patient.getId() + "_" + patient.getName() + " " + patient.getFamily() + "_"
                     + date("ddMMyyyy_HHmmss") + ".xml";
