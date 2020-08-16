@@ -1,6 +1,6 @@
 package cdapi.structure;
 
-import cdapi.bean.Component;
+import cdapi.bean.Componente;
 import cdapi.bean.ResponsibleParty;
 import cdapi.bean.RelatedDocument;
 import cdapi.bean.Authenticator;
@@ -224,8 +224,8 @@ public class XMLRead {
         return null;
     }
 
-    private ArrayList<Component> getList() throws IOException {
-        ArrayList<Component> component = new ArrayList<>();
+    private ArrayList<Componente> getList() throws IOException {
+        ArrayList<Componente> component = new ArrayList<>();
         String line;
         StringTokenizer st;
         try (FileReader fr = new FileReader(getFile());
@@ -259,7 +259,7 @@ public class XMLRead {
                                     }
                                 }
                             }
-                            component.add(new Component(title, content));
+                            component.add(new Componente(title, content));
                         }
                     }
                     fr.close();

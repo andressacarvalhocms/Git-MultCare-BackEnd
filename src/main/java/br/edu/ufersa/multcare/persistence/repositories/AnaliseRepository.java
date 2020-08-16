@@ -1,13 +1,12 @@
 package br.edu.ufersa.multcare.persistence.repositories;
 
-import br.edu.ufersa.multcare.persistence.entities.Analise;
-import br.edu.ufersa.multcare.persistence.entities.Exame;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import br.edu.ufersa.multcare.persistence.entities.Analise;
 
 
 @Repository

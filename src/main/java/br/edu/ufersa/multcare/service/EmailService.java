@@ -6,6 +6,5 @@ public interface EmailService {
 
   void enviarEmail(String destinatario, String conteudo) throws MessagingException;
 
-
-void enviarEmailAnexado(String destinatario, String conteudo, Integer idArquivo) throws MessagingException;
+  void enviarEmailAnexado() throws MessagingException;
 }

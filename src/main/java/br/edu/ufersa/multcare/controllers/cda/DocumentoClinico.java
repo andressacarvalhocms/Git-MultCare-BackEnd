@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import cdapi.bean.Component;
+import cdapi.bean.Componente;
 import cdapi.document.ClinicalDocument;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,95 +36,43 @@ public class DocumentoClinico {
     private int idUsuario;
     private double version;
 
-    /**
-     *
-     * @return
-     */
     public double getVersion() {
         return version;
     }
 
-    /**
-     *
-     * @param version
-     */
     public void setVersion(double version) {
         this.version = version;
     }
 
-    /**
-     *
-     * @param file
-     * @param idArquivo
-     * @param idUsuario
-     */
     public DocumentoClinico(File file, int idArquivo, int idUsuario) {
         this.file = file;
         this.idArquivo = idArquivo;
         this.idUsuario = idUsuario;
     }
 
-    /**
-     *
-     */
     public DocumentoClinico() {
     }
 
-    /**
-     *
-     * @return
-     */
     public File getFile() {
         return file;
     }
 
-    /**
-     *
-     * @param file
-     */
     public void setFile(File file) {
         this.file = file;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getIdArquivo() {
         return idArquivo;
     }
-
-    /**
-     *
-     * @param idArquivo
-     */
     public void setIdArquivo(int idArquivo) {
         this.idArquivo = idArquivo;
     }
-
-    /**
-     *
-     * @return
-     */
     public int getIdUsuario() {
         return idUsuario;
     }
-
-    /**
-     *
-     * @param idUsuario
-     */
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
-    /**
-     *
-     * @param request
-     * @param op
-     * @return
-     * @throws IOException
-     */
     public File consultarDocumentoClinico(Usuario user, int op) throws IOException {
     	Integer idUsuario = obterIdUsuarioAutenticado();
     	
@@ -132,13 +80,6 @@ public class DocumentoClinico {
         setFile(convertByteToFile(arquivo.getFileArquivo()));
         return getFile();
     }
-
-    /**
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
     public File convertMultiPartFileToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
@@ -147,25 +88,12 @@ public class DocumentoClinico {
         }
         return convFile;
     }
-
-    /**
-     *
-     * @param formato
-     * @return
-     */
     public String dataAtual(String formato) {
         SimpleDateFormat format = new SimpleDateFormat(formato);
         Calendar today = Calendar.getInstance();
         return (format.format(today.getTime()));
     }
 
-    /**
-     *
-     * @param arquivo
-     * @return
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
     public File convertByteToFile(byte[] arquivo) throws FileNotFoundException, IOException {
         byte[] bytes = arquivo;
         File f = new File("D:\\Mestrado\\DISSERTACAO GITHUB MULTCARE\\Git-MultCare-BackEnd\\DocumentoClÃ­nico.xml");
@@ -174,38 +102,21 @@ public class DocumentoClinico {
 		}
         return f;
     }
-    private ArrayList<Component> components;
+    private ArrayList<Componente> components;
 
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Component> getComponents() {
+    public ArrayList<Componente> getComponents() {
         return components;
     }
 
-    /**
-     *
-     * @param components
-     */
-    public void setComponents(ArrayList<Component> components) {
+    public void setComponents(ArrayList<Componente> components) {
         this.components = components;
     }
-    
-    /**
-     *
-     * @return
-     */
-    public ArrayList <Component> getListComponent(){
+
+public ArrayList <Componente> getListComponent(){
         return getComponents();
     }
     
-    /**
-     *
-     * @param model
-     * @param cda
-     * @throws IOException
-     */
+
     public void done(ModelMap model, ClinicalDocument cda) throws IOException {
         model.addAttribute("cabecalho", cda.getHeader());
         model.addAttribute("patient", cda.getPatient());
@@ -217,12 +128,6 @@ public class DocumentoClinico {
         model.addAttribute("component", cda.getComponents());
     }
 
-    /**
-     *
-     * @param model
-     * @param request
-     * @param op
-     */
     public void listarDocumentosClinicos(@Validated ModelMap model, Usuario user, int op) {
     	Integer idUsuario = obterIdUsuarioAutenticado();
     	

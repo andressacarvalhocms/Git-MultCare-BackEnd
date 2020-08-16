@@ -1,17 +1,17 @@
 package br.edu.ufersa.multcare.service.impl;
 
-import br.edu.ufersa.multcare.persistence.entities.Alergia;
-import br.edu.ufersa.multcare.persistence.entities.Medicamento;
-import br.edu.ufersa.multcare.persistence.entities.Usuario;
-import br.edu.ufersa.multcare.persistence.repositories.AlergiaRepository;
-import br.edu.ufersa.multcare.service.AlergiaService;
-import br.edu.ufersa.multcare.service.UsuarioService;
-import org.springframework.stereotype.Component;
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
 
 import java.util.Date;
 import java.util.List;
 
-import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
+import org.springframework.stereotype.Component;
+
+import br.edu.ufersa.multcare.persistence.entities.Alergia;
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
+import br.edu.ufersa.multcare.persistence.repositories.AlergiaRepository;
+import br.edu.ufersa.multcare.service.AlergiaService;
+import br.edu.ufersa.multcare.service.UsuarioService;
 
 @Component
 public class AlergiaServiceImpl implements AlergiaService {

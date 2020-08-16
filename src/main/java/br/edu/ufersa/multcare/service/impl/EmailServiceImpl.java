@@ -1,5 +1,7 @@
 package br.edu.ufersa.multcare.service.impl;
 
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -8,18 +10,27 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.service.EmailService;
+import br.edu.ufersa.multcare.service.UsuarioService;
 
-//@Component
+@RestController
+@RequestMapping(value="/api")
 @Service
 public class EmailServiceImpl implements EmailService {
-
+	@Autowired
+	private UsuarioService usuarioService;
+	  
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Override
+    
     public void enviarEmail(String destinatario, String conteudo) throws MessagingException {
 
 
@@ -38,13 +49,21 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
     @Override
-    public void enviarEmailAnexado(String destinatario, String conteudo, Integer idArquivo) throws MessagingException {
+
+    @RequestMapping(value = "/enviar/email", method = RequestMethod.POST)   
+    public void enviarEmailAnexado() throws MessagingException {
     	 MimeMessage message = emailSender.createMimeMessage();
          MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-         helper.setTo(destinatario);
+         
+         Usuario usuario = usuarioService.obterUsuarioPorId(obterIdUsuarioAutenticado());
+         System.out.print("teste");
+         
+     	String resultado = "Segue em anexo o arquivo CDA do paciente: " + usuario.getNome();
+     	Integer idArquivo = obterIdUsuarioAutenticado();
+         
+         helper.setTo(usuario.getEmailMedico());
          helper.setSubject( "Multcare" );
-         helper.setText(conteudo, true);
+         helper.setText(resultado, true);
          helper.setFrom("andressamelocms@gmail.com");
          FileSystemResource file = new FileSystemResource("D:\\Mestrado\\DISSERTACAO GITHUB MULTCARE\\Git-MultCare-BackEnd\\XML\\cda"+idArquivo+".xml");
  		 helper.addAttachment(file.getFilename(), file);

@@ -5,8 +5,7 @@
         <class>br.edu.ufersa.multcare.persistence.entities.Analise</class>
         <class>br.edu.ufersa.multcare.persistence.entities.Exame</class>
         <class>br.edu.ufersa.multcare.persistence.entities.Medicamento</class>
-        <class>br.edu.ufersa.multcare.persistence.entities.Usuario</class>
-        <class>br.edu.ufersa.multcare.persistence.entities.UnidadeDeSaude</class>       
+        <class>br.edu.ufersa.multcare.persistence.entities.Usuario</class>       
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/multcare"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>

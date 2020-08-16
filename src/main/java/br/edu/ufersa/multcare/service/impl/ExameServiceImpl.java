@@ -13,7 +13,6 @@ import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutent
 import static br.edu.ufersa.multcare.util.StringUtil.removerAcentos;
 import static br.edu.ufersa.multcare.util.StringUtil.substituirEspacosPorUnderScore;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 import br.edu.ufersa.multcare.persistence.entities.Usuario;

@@ -1,15 +1,22 @@
 package br.edu.ufersa.multcare.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import weka.classifiers.trees.J48;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
@@ -27,15 +34,9 @@ public class Analise {
 	private int idade;
 	private char sexo;
 	private Double tfg;
+	private Double pred;
 	private String classificacao;
 	private Date dataCadastro;
-//	private long arvore;
-/*	private Double glicemia_jejum;
-	private Double glicemia_pre_pran; 
-	private Double glicemia_pos_pran; 
-	private Double pressao_arterial;
-	private Double monitoramento;
-*/
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;

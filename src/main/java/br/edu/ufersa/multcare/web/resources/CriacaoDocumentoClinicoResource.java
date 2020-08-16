@@ -1,10 +1,6 @@
 package br.edu.ufersa.multcare.web.resources;
 
-import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,9 +13,8 @@ import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +30,7 @@ import br.edu.ufersa.multcare.service.AnaliseDeRiscoDeDRCService;
 import br.edu.ufersa.multcare.service.MedicamentoService;
 import cdapi.bean.Authenticator;
 import cdapi.bean.Author;
-import cdapi.bean.Component;
+import cdapi.bean.Componente;
 import cdapi.bean.Header;
 import cdapi.bean.Patient;
 import cdapi.bean.RelatedDocument;
@@ -43,22 +38,20 @@ import cdapi.bean.ResponsibleParty;
 import cdapi.document.ClinicalDocument;
 
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 @RestController
 @RequestMapping(value="/api/cda")
+@Service
 public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
 
     @Autowired
     ServletContext context;
 
-    @RequestMapping(value = "/escrever", method = RequestMethod.POST)
-    public String criarDocumentoClinico(Usuario user, ModelMap model, ClinicalDocument cda, Componentes comp, Analise analise) throws IOException {
+    @RequestMapping(value = "/escrever", method = RequestMethod.POST)   
+    public String criarDocumentoClinico(Usuario user, ClinicalDocument cda,  Analise analise) throws IOException {
+    	System.out.print("teste");
     	cda.setHeader(alterarDadosHeader(null, 1));
         cda.setAuthor(obterDadosMedico(user));
-        gravarDadosDocumentoClinico(cda,comp, analise);
+        gravarDadosDocumentoClinico(cda, null, analise);
         return "./ler";
     }
  
@@ -70,11 +63,11 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
         clinicalDocument.setResponsibleParty((clinicalDocument.getResponsibleParty()));
         clinicalDocument.setAuthenticator(alterarDadosAutenticacao());
               
-        ArrayList<cdapi.bean.Component> components = escreverComponentes(c, analise);
+        ArrayList<cdapi.bean.Componente> components = escreverComponentes(c, analise);
         
         if (components != null) {
             clinicalDocument.setComponents(components);
-            System.out.print("entrou");
+           // System.out.print("entrou");
             
         }
         return clinicalDocument.toGenerateCDAFile();
@@ -94,8 +87,8 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
 	private AnaliseDeRiscoDeDRCService analiseDeRiscoDeDRCService;
 
 	@Transactional
-    private ArrayList<Component> escreverComponentes(Componentes c, Analise analise) throws IOException {
-       ArrayList<cdapi.bean.Component> components = new ArrayList<>();
+    private ArrayList<Componente> escreverComponentes(Componentes c, Analise analise) throws IOException {
+       ArrayList<cdapi.bean.Componente> components = new ArrayList<>();
        
        File file =  new File("D:\\Mestrado\\DISSERTACAO GITHUB MULTCARE\\Git-MultCare-BackEnd\\img\\j48.jpg");
        
@@ -104,7 +97,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
        if (encoded != null) {
           	ArrayList<Object> imagem = new ArrayList<>();
              	  imagem.add(encoded);
-               components.add(new cdapi.bean.Component("Imagem", imagem));
+               components.add(new cdapi.bean.Componente("Imagem", imagem));
           }
        
        List<Medicamento> medicamentoList = medicamentoService.listarMedicamentoUsuarioLogado();
@@ -113,7 +106,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
            for (int i = 0; i < medicamentoList.size(); i++) {
            		medicamentos.add(medicamentoList.get(i).getNome());
            }          
-            components.add(new cdapi.bean.Component("Medicamentos", medicamentos));
+            components.add(new cdapi.bean.Componente("Medicamentos", medicamentos));
        }
 
        List<Alergia> alergiaList = alergiaService.listarAlergiaUsuarioLogado();
@@ -122,7 +115,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
            for (int i = 0; i < alergiaList.size(); i++) {
         	   alergias.add(alergiaList.get(i).getNome());
            }          
-            components.add(new cdapi.bean.Component("Alergia", alergias));
+            components.add(new cdapi.bean.Componente("Alergia", alergias));
        }
        
        List<Analise> analiseList = analiseDeRiscoDeDRCService.obterUltimaAnalisesPorUsuario();
@@ -131,7 +124,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
            for (int i = 0; i < analiseList.size(); i++) {
            	analises.add(analiseList.get(i).getCreatinina());
            }           
-            components.add(new cdapi.bean.Component("Creatinina", analises));
+            components.add(new cdapi.bean.Componente("Creatinina", analises));
        }
        
        if (analiseList != null) {
@@ -139,7 +132,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
               for (int i = 0; i < analiseList.size(); i++) {
               	analises.add(analiseList.get(i).getUreia());
               }           
-               components.add(new cdapi.bean.Component("Ureia", analises));
+               components.add(new cdapi.bean.Componente("Ureia", analises));
           }
 
        if (analiseList != null) {
@@ -147,7 +140,7 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
               for (int i = 0; i < analiseList.size(); i++) {
               	analises.add(analiseList.get(i).getTfg());
               }           
-               components.add(new cdapi.bean.Component("TFG", analises));
+               components.add(new cdapi.bean.Componente("TFG", analises));
           }
           
 
@@ -156,14 +149,14 @@ public class CriacaoDocumentoClinicoResource extends DocumentoClinico {
               for (int i = 0; i < analiseList.size(); i++) {
               	analises.add(analiseList.get(i).getMicroalbuminaria());
               }           
-               components.add(new cdapi.bean.Component("Microalbuminaria", analises));
+               components.add(new cdapi.bean.Componente("Microalbuminaria", analises));
           }
        if (analiseList != null) {
         	ArrayList<Object> analises = new ArrayList<>();
             for (int i = 0; i < analiseList.size(); i++) {
             	analises.add(analiseList.get(i).getClassificacao());
             }           
-             components.add(new cdapi.bean.Component("Diagnostico", analises));
+             components.add(new cdapi.bean.Componente("Diagnostico", analises));
         }
 
        

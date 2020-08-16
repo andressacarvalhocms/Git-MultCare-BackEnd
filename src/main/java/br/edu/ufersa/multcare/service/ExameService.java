@@ -14,18 +14,12 @@ public interface ExameService {
 
     Exame cadastrarExame(Exame exame);
 
-  //  List<Exame> cadastrarExamePorXml(ExamesXmlDTO examesXmlDTO);
-
     Exame atualizarExame(Exame exame);
 
     void deletarExame(Exame exame);
 
     Map<String, Boolean> examesCadastradosUsuarioLogado();
 
-//	List<Exame> cadastrarExamePorXml(Exame exame);
-
 	public List<Exame> cadastrarExamePorXml(List<Exame> examesXmlDTO);
-	
-//	public List<Exame> saveAllExame(List<Exame> exameList);
 	
 }

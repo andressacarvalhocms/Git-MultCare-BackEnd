@@ -1,21 +1,14 @@
 package br.edu.ufersa.multcare.model.bean.cda;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 @Entity
 @Getter @Setter @ToString
 public class Arquivo {

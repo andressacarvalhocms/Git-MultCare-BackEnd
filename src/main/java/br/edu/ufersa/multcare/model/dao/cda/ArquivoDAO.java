@@ -9,10 +9,6 @@ import java.util.List;
 import br.edu.ufersa.multcare.model.bean.cda.Arquivo;
 import br.edu.ufersa.multcare.model.dao.cda.ConnectionFactory;
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 public class ArquivoDAO {
 
     private Connection con = null;

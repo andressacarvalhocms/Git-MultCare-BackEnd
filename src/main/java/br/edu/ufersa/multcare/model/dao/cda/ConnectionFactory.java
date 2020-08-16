@@ -7,10 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 public class ConnectionFactory {
 
     //Alterando localizaÃ§Ã£o do jdbc. LocalizaÃ§Ã£o do diretorio do banco dentro da aplicaÃ§Ã£o.

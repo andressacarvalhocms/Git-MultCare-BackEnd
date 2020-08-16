@@ -17,15 +17,8 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("br.edu.ufersa.multcare"))
-			//	.paths(regex("/api.*"))
 				.build();
-		//		.apiInfo(metaInfo());
 	}
 
-//	private Predicate<String> regex(String string) {
-		// TODO Auto-generated method stub
-	//	return null;
-	//}
-	
 	
 }

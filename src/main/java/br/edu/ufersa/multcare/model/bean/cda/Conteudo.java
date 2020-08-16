@@ -1,10 +1,5 @@
 package br.edu.ufersa.multcare.model.bean.cda;
 
-
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 public class Conteudo {
 
     private Object conteudo;

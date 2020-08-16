@@ -1,5 +1,20 @@
 package br.edu.ufersa.multcare.service.impl;
 
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.CREATININA;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.MICROALBUMINURIA;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.TFG;
+import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.UREIA;
+import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
+import static br.edu.ufersa.multcare.shared.baseaprendizagem.BaseAprendizagemSingleton.obterBaseAprendizagem;
+import static java.util.Arrays.asList;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Component;
+
 import br.edu.ufersa.multcare.persistence.entities.Analise;
 import br.edu.ufersa.multcare.persistence.entities.CodigoExame;
 import br.edu.ufersa.multcare.persistence.entities.Exame;
@@ -7,24 +22,16 @@ import br.edu.ufersa.multcare.persistence.entities.Usuario;
 import br.edu.ufersa.multcare.persistence.repositories.AnaliseRepository;
 import br.edu.ufersa.multcare.persistence.repositories.ExameRepository;
 import br.edu.ufersa.multcare.service.AnaliseDeRiscoDeDRCService;
+import br.edu.ufersa.multcare.service.CriarDocumentoClinicoService;
 import br.edu.ufersa.multcare.service.EmailService;
 import br.edu.ufersa.multcare.service.UsuarioService;
-
-import org.springframework.stereotype.Component;
+import br.edu.ufersa.multcare.web.resources.CriacaoDocumentoClinicoResource;
+import cdapi.document.ClinicalDocument;
 import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
-
-import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-
-import static br.edu.ufersa.multcare.persistence.entities.CodigoExame.*;
-import static br.edu.ufersa.multcare.security.SecurityUtils.obterIdUsuarioAutenticado;
-import static br.edu.ufersa.multcare.shared.baseaprendizagem.BaseAprendizagemSingleton.obterBaseAprendizagem;
-import static java.util.Arrays.asList;
 
 @Component
 public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCService {
@@ -33,12 +40,16 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
     private final ExameRepository exameRepository;
     private UsuarioService usuarioService;
     private EmailService emailService;
-
-    public AnaliseDeRiscoDeDRCServiceImpl(AnaliseRepository analiseRepository, ExameRepository exameRepository, UsuarioService usuarioService, EmailService emailService) {
+	private CriarDocumentoClinicoService criarDocumentoClinicoService;
+	
+    
+    public AnaliseDeRiscoDeDRCServiceImpl(AnaliseRepository analiseRepository, ExameRepository exameRepository, 
+   		UsuarioService usuarioService, EmailService emailService) {
         this.analiseRepository = analiseRepository;
         this.exameRepository = exameRepository;
         this.usuarioService = usuarioService;
         this.emailService = emailService;
+     //   this.criarDocumentoClinicoService = criarDocumentoClinicoService;
     }
 
 
@@ -75,28 +86,18 @@ public class AnaliseDeRiscoDeDRCServiceImpl implements AnaliseDeRiscoDeDRCServic
 
         Attribute a = novo.attribute(8);
         String predClass = a.value((int) pred);
- 
+      
+        analise.setPred(pred);
+        
         analise.setClassificacao(predClass);
         analise.setUsuario(usuario);
         analise.setDataCadastro(new Date());
-        analise = analiseRepository.save(analise);
 
         analise.invalidarExamesUtilizados();
         atualizarStatusExames(analise.getExames());
 
-        // TODO Montar conteudo do email.
-/*        String exames = "Exames utilizados: <br> Creatina: " +
-                analise.getCreatinina() + " mg/DL <br> Uréia: " +
-                analise.getUreia() + " mg/DL <br> Microalbuminaria: " +
-                analise.getMicroalbuminaria() + " mmHg <br> TFG: " +
-                analise.getTfg() + " mL/min/1,73 m² <br><br>";
-  */    System.out.print(pred);
+        analise = analiseRepository.save(analise);
   
-        if (pred != 2.0) {
-        	String resultado = "Segue em anexo o arquivo CDA do paciente: " + usuario.getNome();
-			Integer idArquivo = obterIdUsuarioAutenticado();
-			emailService.enviarEmailAnexado(usuario.getEmailMedico(), resultado, idArquivo);
-        }	
         return analise;
     }
 

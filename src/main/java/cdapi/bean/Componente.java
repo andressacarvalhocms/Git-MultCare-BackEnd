@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * @author Gyovanne Cavalcanti
  */
-public class Component {
+public class Componente {
 
     private final ArrayList<Object> content;
     private final String title;
@@ -16,7 +16,7 @@ public class Component {
      * @param title
      * @param content
      */
-    public Component(String title, ArrayList<Object> content) {
+    public Componente(String title, ArrayList<Object> content) {
         this.content = content;
         this.title = title;
     }

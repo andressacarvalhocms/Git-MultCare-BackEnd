@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cdapi.bean.Authenticator;
 import cdapi.bean.Author;
-import cdapi.bean.Component;
+import cdapi.bean.Componente;
 import cdapi.bean.Header;
 import cdapi.bean.Patient;
 import cdapi.bean.RelatedDocument;
@@ -55,7 +55,7 @@ public class ClinicalDocument {
     private Authenticator authenticator;
     private RelatedDocument related;
     private ResponsibleParty responsibleParty;
-    private ArrayList<Component> components;
+    private ArrayList<Componente> components;
     private ValidationCDA vcda;
 
     /**
@@ -442,7 +442,7 @@ public class ClinicalDocument {
      *
      * @return uma representação ArrayList com as informaçoes dos componentes
      */
-    public ArrayList<Component> getComponents() {
+    public ArrayList<Componente> getComponents() {
         return components;
     }
 
@@ -474,7 +474,7 @@ public class ClinicalDocument {
      *
      * @param components ArrayList dos componentes
      */
-    public void setComponents(ArrayList<Component> components) {
+    public void setComponents(ArrayList<Componente> components) {
         this.components = components;
     }
 

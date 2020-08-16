@@ -1,9 +1,5 @@
 package br.edu.ufersa.multcare.model.bean.cda;
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 public class Email {
 
     private String nomeEmail;

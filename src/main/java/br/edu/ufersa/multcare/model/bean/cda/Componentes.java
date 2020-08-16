@@ -7,21 +7,13 @@ import br.edu.ufersa.multcare.persistence.entities.Analise;
 import br.edu.ufersa.multcare.persistence.entities.Exame;
 import br.edu.ufersa.multcare.persistence.entities.Medicamento;
 
-/**
- *
- * @author Gyovanne Cavalcanti
- */
 public class Componentes {
 
     private List<Exame> exameslaboratoriais;
     private List<Alergia> listarAlergiasPorUsuario;
     private List<Medicamento> medicamentos;
     private List<Analise> diagnostico;
-//    private List<Conteudo> historicomedico;
- //   private List<Conteudo> historicofamiliar;
- //   private List<Conteudo> historicosaude;
     private List<Exame> exames;
-  //  private List<Conteudo> tratamento;
     private List<Exame> exameslaboratoriaisfixos;
 
     /**
@@ -94,58 +86,6 @@ public class Componentes {
         this.diagnostico = diagnostico;
     }
 
-    /**
-     *
-     * @return
-     */
- /*   public List<Conteudo> getHistoricomedico() {
-        return historicomedico;
-    }
-
-    /**
-     *
-     * @param historicomedico
-     */
-   /* public void setHistoricomedico(List<Conteudo> historicomedico) {
-        this.historicomedico = historicomedico;
-    }
-
-    /**
-     *
-     * @return
-     */
-  /*  public List<Conteudo> getHistoricofamiliar() {
-        return historicofamiliar;
-    }
-
-    /**
-     *
-     * @param historicofamiliar
-     */
-  /*  public void setHistoricofamiliar(List<Conteudo> historicofamiliar) {
-        this.historicofamiliar = historicofamiliar;
-    }
-
-    /**
-     *
-     * @return
-     */
-  /*  public List<Conteudo> getHistoricosaude() {
-        return historicosaude;
-    }
-
-    /**
-     *
-     * @param historicosaude
-     */
-   /* public void setHistoricosaude(List<Conteudo> historicosaude) {
-        this.historicosaude = historicosaude;
-    }
-
-    /**
-     *
-     * @return
-     */
     public List<Exame> getExameslaboratoriais() {
         return exameslaboratoriais;
     }
@@ -174,20 +114,5 @@ public class Componentes {
         this.medicamentos = medicamentos;
     }
 
-    /**
-     *
-     * @return
-     */
-   /* public List<Conteudo> getTratamento() {
-        return tratamento;
-    }
 
-    /**
-     *
-     * @param tratamento
-     */
-  /*  public void setTratamento(List<Conteudo> tratamento) {
-        this.tratamento = tratamento;
-    }
-*/
 }
