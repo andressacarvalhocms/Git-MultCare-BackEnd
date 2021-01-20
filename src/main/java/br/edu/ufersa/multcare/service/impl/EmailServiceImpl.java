@@ -65,7 +65,9 @@ public class EmailServiceImpl implements EmailService {
          helper.setSubject( "Multcare" );
          helper.setText(resultado, true);
          helper.setFrom("andressamelocms@gmail.com");
-         FileSystemResource file = new FileSystemResource("D:\\Mestrado\\DISSERTACAO GITHUB MULTCARE\\Git-MultCare-BackEnd\\XML\\cda"+idArquivo+".xml");
+         System.out.print(idArquivo);
+         FileSystemResource file = new FileSystemResource("/XML/cda"+idArquivo+".xml");
+         System.out.print(file);
  		 helper.addAttachment(file.getFilename(), file);
          emailSender.send(message);
         System.out.println("Email enviado!");

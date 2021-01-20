@@ -5,11 +5,11 @@
    <templateId root='2.16.840.1.113883.10.20.1'/>
    <id root='M345' extension='2.16.840.1.113883.3.933'/>
    <code code='410.9' displayName='MultCare Paciente' codeSystem='2.16.840.1.113883.6.103' codeSystemName='ICD-9-CM'/>
-   <effectiveTime value="16082020"/>
+   <effectiveTime value="18082020"/>
    <confidentialityCode code="N" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'/>
    <setId extension="MM1" root="2.16.840.1.113883.3.933"/>
    <versionNumber value="1.0"/>
-   <copyTime value='16082020'/>
+   <copyTime value='18082020'/>
    <recordTarget>
       <patientRole>
          <id extension="0" root="2.16.840.1.113883.3.933"/>
@@ -39,7 +39,7 @@
       </patientRole>
    </recordTarget>
    <author>
-      <time value = "16082020"/>
+      <time value = "18082020"/>
       <assignedAuthor>
          <id root='2.16.840.1.113883.3.933' extension='crmUsuario'/>
          <addr>enderecoUsuario</addr>
@@ -61,7 +61,7 @@
       </assignedCustodian>
    </custodian>
    <legalAuthenticator>
-      <time value="16082020"/>
+      <time value="18082020"/>
       <signatureCode code="S"/>
       <assignedEntity>
          <id extension="M555" root="2.16.840.1.113883.3.933"/>
