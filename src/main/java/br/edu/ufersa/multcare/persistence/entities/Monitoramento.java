@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 
 
@@ -14,8 +17,11 @@ import java.util.Date;
 public class Monitoramento {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 	private String status;
 
 	@Column(name = "usuario_id", insertable = false, updatable = false)

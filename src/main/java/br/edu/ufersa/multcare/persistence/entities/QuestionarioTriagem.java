@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -27,7 +29,10 @@ import lombok.ToString;
 public class QuestionarioTriagem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String Diabetico;
     private String Insulina;

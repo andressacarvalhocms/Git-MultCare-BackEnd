@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -24,7 +26,10 @@ import lombok.ToString;
 public class Analise {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private char dm;
 	private char has;

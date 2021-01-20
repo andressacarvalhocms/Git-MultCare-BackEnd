@@ -6,6 +6,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 @Table(uniqueConstraints = {
@@ -15,6 +17,9 @@ import javax.persistence.*;
 public class MedicamentoTriagem {
 
 	@Id
+	@GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
 	private Integer id;
 	private String descricao;
 

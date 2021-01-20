@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -23,7 +25,10 @@ import lombok.ToString;
 public class Exame  {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String nome;
 	private String resultado;

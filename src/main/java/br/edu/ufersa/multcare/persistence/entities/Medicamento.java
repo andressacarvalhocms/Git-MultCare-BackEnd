@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 
 
@@ -14,7 +17,10 @@ import java.util.Date;
 public class Medicamento  {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
+	@GenericGenerator(name = "increment", strategy = "increment") 
+	
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String nome;
 	private String hora;
