@@ -1,4 +1,4 @@
-/*insert into medicamento_triagem (id, descricao) values (1, "Corticosteroides");
+insert into medicamento_triagem (id, descricao) values (1, "Corticosteroides");
 insert into medicamento_triagem (id, descricao) values (2, "Octreotida");
 insert into medicamento_triagem (id, descricao) values (3, "Betabloqueadores");
 insert into medicamento_triagem (id, descricao) values (4, "Epinefrina");
