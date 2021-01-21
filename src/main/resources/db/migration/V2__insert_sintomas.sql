@@ -42,9 +42,6 @@ insert into medicamento_triagem (id, descricao) values (41, "Albuterol");
 insert into medicamento_triagem (id, descricao) values (42, "Terbutalina");
 insert into medicamento_triagem (id, descricao) values (43, "Angiotensina");
 
-
-
-
 insert into sintoma_triagem (id, descricao) values (1, "Nauseas");
 insert into sintoma_triagem (id, descricao) values (2, "Fadiga");
 insert into sintoma_triagem (id, descricao) values (3, "Sonolencia");
